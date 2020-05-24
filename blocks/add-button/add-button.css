@@ -1,0 +1,14 @@
+.add-button {
+  width: 282px;
+  height: 50px;
+  border: 1px solid #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+@media screen and (min-width: 1024px) {
+  .add-button {
+    width: 150px;
+  }
+}
