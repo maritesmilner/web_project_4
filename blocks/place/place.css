@@ -1,0 +1,10 @@
+@import url('./__name/place__name.css');
+@import url('./__picture/place__picture.css');
+@import url('./__name-group/place__name-group.css');
+
+.place {
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}

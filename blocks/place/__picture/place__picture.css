@@ -1,0 +1,7 @@
+.place__picture {
+    max-width: 282px;
+    max-height: 282px;
+    border-radius: 10px 10px 0px 0px;
+    margin: 0;
+    display: block;
+}
