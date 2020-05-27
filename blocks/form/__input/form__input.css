@@ -1,0 +1,29 @@
+.form__input {
+  width: 200px;
+  font-size: 12px;
+  line-height: 15px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  margin: 0 0 20px 0;
+  padding: 0 0 12px 0 ;
+}
+.form__input:last-of-type {
+  margin: 0;
+}
+.form__input::placeholder {
+  color: #C4C4C4;
+  opacity: 1;
+}
+
+@media screen and (min-width: 1024px) {
+  .form__input {
+    width: 358px;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 29.74px;
+    padding-bottom: 13px;
+  }
+  .form__input::placeholder {
+    color: #000000;
+  }
+}

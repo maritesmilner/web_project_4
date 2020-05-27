@@ -20,15 +20,15 @@
         <div class="profile__info">
           <div class="profile__person">
             <h1 class="profile__name">Jacques Cousteau</h1>
-            <div class="edit-button">
-              <img src="./images/edit.svg" alt="edit button icon" class="edit-button__icon">
-            </div>
+            <svg class="edit-button" width="10" height="10" viewBox="0 0 10 10" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 1.32827L2.60377 8.7666L1.28302 7.41936L8.66038 0L10 1.32827ZM0 10L1.96226 9.41177L0.584906 8.08349L0 10Z"/>
+            </svg>
           </div>
           <p class="profile__title">Explorer</p>
         </div>
-        <div class="add-button">
-          <img src="./images/plus.svg" alt="add button icon" class="add-button__icon">
-        </div>
+        <svg class="add-button" width="22" height="22" viewBox="0 0 22 22" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"/>
+        </svg>
       </section>
       <section class="elements">
         <ul class="places">
@@ -61,9 +61,9 @@
             </div>
           </li>
           <li class="place">
-            <img src="./images/vanois.jpg" alt="Picture of Vanois National..." class="place__picture">
+            <img src="./images/vanois.jpg" alt="Picture of Vanois National Park" class="place__picture">
             <div class="place__name-group">
-              <h3 class="place__name">Vanois National...</h3>
+              <h3 class="place__name">Vanois National Park</h3>
               <img src="./images/heart.svg" alt="heart icon" class="heart-button">
             </div>
           </li>
@@ -76,10 +76,25 @@
           </li>
         </ul>
       </section>
+      <section class="form-elements">
+        <div class="page overlay"></div>
+        <div class="form">
+          <h2 class="form__title">Edit profile</h2>
+          <input type="text" placeholder="Name" class="form__input form__input_type_name">
+          <input type="text" placeholder="Title" class="form__input form__input_type_title">
+          <button class="form__save-button">
+            Save
+          </button>
+          <svg class="close-button" width="58" height="58" viewBox="0 0 58 58" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M44.7661 41.5683L31.9759 28.778L44.7661 15.9878L41.5686 12.7902L28.7783 25.5805L15.9881 12.7902L12.7905 15.9878L25.5808 28.778L12.7905 41.5683L15.9881 44.7658L28.7783 31.9756L41.5686 44.7658L44.7661 41.5683Z"/>
+          </svg>
+        </div>
+       </section>
     </main>
     <footer>
       <p class="footer">© 2020 Around The U.S.</p>
     </footer>
   </div>
+  <script src="./script.js"></script>
 </body>
 </html>

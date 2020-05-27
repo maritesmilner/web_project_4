@@ -1,0 +1,8 @@
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  opacity: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,11 @@
+.close-button {
+  width: 40.7px;
+  height: 40.7px;
+  position: absolute;
+  top: -40.7px;
+  right: -40.7px;
+}
+.close-button:hover {
+  cursor: pointer;
+  fill: rgba(255, 255, 255, 0.6);
+}

@@ -2,7 +2,7 @@
   max-width: 280px;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
   margin: 10.25px -30px 14px 0;
 }
 
