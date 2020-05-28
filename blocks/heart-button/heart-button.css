@@ -3,3 +3,7 @@
   height: 18.13px;
   margin: auto 0 auto 0;
 }
+.heart-button:hover {
+  cursor: pointer;
+  stroke: rgba(255, 255, 255, 0.6);
+}
