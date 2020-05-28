@@ -57,6 +57,8 @@ function addNewPlace() {
       </li>
 `);
   hideNewPlaceForm();
+  placeTitleField.value = '';
+  imageLinkField.value = '';
 }
 
 editButton.addEventListener('click', dislayEditForm);
