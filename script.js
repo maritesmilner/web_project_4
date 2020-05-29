@@ -13,19 +13,19 @@ const titleField = editProfileForm.querySelector('.form__input_type_title');
 function dislayEditForm() {
   nameField.value = profileName.innerHTML;
   titleField.value = profileTitle.innerHTML;
-  editProfileForm.classList.remove('edit-profile-form_hide');
+  toggleEditForm();
 }
-function hideEditForm() {
-  editProfileForm.classList.add('edit-profile-form_hide');
+function toggleEditForm() {
+  editProfileForm.classList.toggle('edit-profile-form_hide');
 }
 function saveProfile() {
   profileName.textContent = nameField.value;
   profileTitle.textContent = titleField.value;
-  hideEditForm();
+  toggleEditForm();
 }
 
 editButton.addEventListener('click', dislayEditForm);
-edfCloseButton.addEventListener('click', hideEditForm);
+edfCloseButton.addEventListener('click', toggleEditForm);
 edfSaveButton.addEventListener('click', saveProfile);
 
 
