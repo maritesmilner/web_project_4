@@ -1,3 +1,1 @@
-.edit-profile-form {
-  display: none;
-}
+@import url('./edit-profile-form_hide.css');

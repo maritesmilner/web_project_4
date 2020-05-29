@@ -1,19 +1,29 @@
 .add-button {
-  width: 16px;
-  height: 16px;
+  width: 282px;
+  height: 50px;
   border: 2px solid #FFFFFF;
-  padding: 17px 132px 17px 134px;
+  background: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 22 22" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .add-button:hover {
   cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 0.6);
-  fill: rgba(255, 255, 255, 0.6);
+  background: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 22 22" fill="rgba(255, 255, 255, 0.6)" xmlns="http://www.w3.org/2000/svg"><path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 @media screen and (min-width: 1024px) {
   .add-button {
-    width: 22px;
-    height: 22px;
-    padding: 14px 64px;
+    width: 150px;
+    background: url('data:image/svg+xml;utf8,<svg width="22" height="22" viewBox="0 0 22 22" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .add-button:hover {
+    background: url('data:image/svg+xml;utf8,<svg width="22" height="22" viewBox="0 0 22 22" fill="rgba(255, 255, 255, 0.6)" xmlns="http://www.w3.org/2000/svg"><path d="M22 9.77778H12.2222V0H9.77778V9.77778H0V12.2222H9.77778V22H12.2222V12.2222H22V9.77778Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }

@@ -1,11 +1,34 @@
 .form__close-button {
-  width: 40.7px;
-  height: 40.7px;
+  width: 30px;
+  height: 30px;
   position: absolute;
-  top: -40.7px;
-  right: -40.7px;
+  top: -30px;
+  right: -30px;
+  border: none;
+  background: url('data:image/svg+xml;utf8,<svg width="30" height="30" viewBox="0 0 58 58" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M44.7661 41.5683L31.9759 28.778L44.7661 15.9878L41.5686 12.7902L28.7783 25.5805L15.9881 12.7902L12.7905 15.9878L25.5808 28.778L12.7905 41.5683L15.9881 44.7658L28.7783 31.9756L41.5686 44.7658L44.7661 41.5683Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .form__close-button:hover {
   cursor: pointer;
-  fill: rgba(255, 255, 255, 0.6);
+  background: url('data:image/svg+xml;utf8,<svg width="30" height="30" viewBox="0 0 58 58" fill="rgba(255, 255, 255, 0.6)" xmlns="http://www.w3.org/2000/svg"><path d="M44.7661 41.5683L31.9759 28.778L44.7661 15.9878L41.5686 12.7902L28.7783 25.5805L15.9881 12.7902L12.7905 15.9878L25.5808 28.778L12.7905 41.5683L15.9881 44.7658L28.7783 31.9756L41.5686 44.7658L44.7661 41.5683Z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media screen and (min-width: 1024px) {
+  .form__close-button {
+    width: 40.7px;
+    height: 40.7px;
+    top: -40.7px;
+    right: -40.7px;
+    background: url('data:image/svg+xml;utf8,<svg width="40.7" height="40.7" viewBox="0 0 58 58" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M44.7661 41.5683L31.9759 28.778L44.7661 15.9878L41.5686 12.7902L28.7783 25.5805L15.9881 12.7902L12.7905 15.9878L25.5808 28.778L12.7905 41.5683L15.9881 44.7658L28.7783 31.9756L41.5686 44.7658L44.7661 41.5683Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .form__close-button:hover {
+    background: url('data:image/svg+xml;utf8,<svg width="40.7" height="40.7" viewBox="0 0 58 58" fill="rgba(255, 255, 255, 0.6)" xmlns="http://www.w3.org/2000/svg"><path d="M44.7661 41.5683L31.9759 28.778L44.7661 15.9878L41.5686 12.7902L28.7783 25.5805L15.9881 12.7902L12.7905 15.9878L25.5808 28.778L12.7905 41.5683L15.9881 44.7658L28.7783 31.9756L41.5686 44.7658L44.7661 41.5683Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
