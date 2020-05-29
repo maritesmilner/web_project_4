@@ -9,12 +9,9 @@
   background-color: #000000;
   padding: 0;
 }
-/* Note to reviewer: not sure what else I can do here other than to repeat the
-background svg image so the fill color can be changed. */
 .edit-button:hover {
   cursor: pointer;
-  border-color: rgba(255, 255, 255, 0.6);
-  background-image: url('data:image/svg+xml;utf8,<svg class="edit-button" viewBox="0 0 10 10" fill="rgba(255, 255, 255, 0.6)" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.32827L2.60377 8.7666L1.28302 7.41936L8.66038 0L10 1.32827ZM0 10L1.96226 9.41177L0.584906 8.08349L0 10Z"/></svg>');
+  opacity: .6;
 }
 
 @media screen and (min-width: 1024px) {
