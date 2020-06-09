@@ -28,52 +28,10 @@
       </section>
       <section class="elements">
         <ul class="places">
-          <li class="place">
-            <img src="./images/yosimite.jpg" alt="Picture of Yosemite Valley" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Yosemite Valley</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/lake-louise.jpg" alt="Picture of Lake Louise" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Lake Louise</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/bald-mountains.jpg" alt="Picture of Bald Mountains" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Bald Mountains</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/latemar.jpg" alt="Picture of Latemar" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Latemar</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/vanois.jpg" alt="Picture of Vanois National Park" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Vanois National Park</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
-          <li class="place">
-            <img src="./images/lago.jpg" alt="Picture of Lago di Braies" class="place__picture">
-            <div class="place__name-group">
-              <h3 class="place__name">Lago di Braies</h3>
-              <button class="heart-button"></button>
-            </div>
-          </li>
         </ul>
       </section>
       <section class="edit-profile-form edit-profile-form_hide">
-        <div class="page overlay"></div>
+        <div class="overlay"></div>
         <div class="form">
           <h2 class="form__title">Edit profile</h2>
           <input type="text" placeholder="Name" class="form__input form__input_type_name">
@@ -89,6 +47,15 @@
       <p class="footer">© 2020 Around The U.S.</p>
     </footer>
   </div>
+  <template id = "place-template">
+    <li class="place">
+      <img src="" alt="" class="place__picture">
+      <div class="place__name-group">
+        <h3 class="place__name"></h3>
+        <button class="heart-button"></button>
+      </div>
+    </li>
+  </template>
   <script src="./script.js"></script>
 </body>
 </html>
