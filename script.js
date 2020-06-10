@@ -81,8 +81,10 @@ function makeCard(card) {
   const placePic = newPlace.querySelector('.place__picture');
   placePic.src = card.link;
   placePic.alt = `Picture of ${card.name}`;
-  const placeName = newPlace.querySelector('.place__name');
-  placeName.textContent = card.name;
+  newPlace.querySelector('.place__name').textContent = card.name;
+  newPlace.querySelector('.heart-button').addEventListener("click", function (evt) {
+    evt.target.classList.toggle("heart-button_active");
+  });
   return newPlace;
 }
 
