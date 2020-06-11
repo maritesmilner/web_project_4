@@ -40,26 +40,26 @@ const profileName = container.querySelector('.profile__name');
 const profileTitle = container.querySelector('.profile__title');
 const profileNameField = editProfileForm.querySelector('.form__input_type_name');
 const profileTitleField = editProfileForm.querySelector('.form__input_type_title');
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', () => {
   profileNameField.value = profileName.textContent;
   profileTitleField.value = profileTitle.textContent;
   toggleForm(editProfileForm);
 });
-edfSaveButton.addEventListener('click', function () {
+edfSaveButton.addEventListener('click', () => {
   profileName.textContent = profileNameField.value;
   profileTitle.textContent = profileTitleField.value;
   toggleForm(editProfileForm);
 });
-edfCloseButton.addEventListener('click', function () { toggleForm(editProfileForm); });
+edfCloseButton.addEventListener('click', () => toggleForm(editProfileForm));
 
 //New Place Form
 const addButton = container.querySelector('.add-button');
 const newPlaceForm = container.querySelector('.new-place-form');
 const npfCloseButton = newPlaceForm.querySelector('.form__close-button');
 const npfSaveButton = newPlaceForm.querySelector('.form__save-button');
-addButton.addEventListener('click', function () { toggleForm(newPlaceForm); });
-npfCloseButton.addEventListener('click', function () { toggleForm(newPlaceForm); });
-npfSaveButton.addEventListener('click', function () {
+addButton.addEventListener('click', () => toggleForm(newPlaceForm));
+npfCloseButton.addEventListener('click', () => toggleForm(newPlaceForm));
+npfSaveButton.addEventListener('click', () => {
   let name = newPlaceForm.querySelector('.form__input_type_title');
   let link = newPlaceForm.querySelector('.form__input_type_link');
   const card = {
@@ -81,10 +81,10 @@ function makeCard(card) {
   const placePic = newPlace.querySelector('.place__picture');
   placePic.src = card.link;
   placePic.alt = `Picture of ${card.name}`;
+  placePic.addEventListener("click", (evt) => evt.target.parentElement.remove());
   newPlace.querySelector('.place__name').textContent = card.name;
-  newPlace.querySelector('.heart-button').addEventListener("click", function (evt) {
-    evt.target.classList.toggle("heart-button_active");
-  });
+  newPlace.querySelector('.heart-button').addEventListener("click", (evt) => evt.target.classList.toggle("heart-button_active"));
+  newPlace.querySelector('.trash-button').addEventListener("click", (evt) => evt.target.parentElement.remove());
   return newPlace;
 }
 
