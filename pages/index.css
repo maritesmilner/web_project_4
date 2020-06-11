@@ -11,6 +11,8 @@
 @import url('../blocks/heart-button/heart-button_active.css');
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/overlay/overlay.css');
+@import url('../blocks/overlay/overlay_opacity_90.css');
 @import url('../blocks/form/form.css');
-@import url('../blocks/form/form_hide.css');
+@import url('../blocks/form/form_display_pic.css');
+@import url('../blocks/hide/hide.css');
 @import url('../blocks/trash-button/trash-button.css');

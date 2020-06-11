@@ -1,4 +1,3 @@
-//Load 6 initial cards
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -28,8 +27,15 @@ const initialCards = [
 const placeTemplate = document.getElementById('place-template');
 const container = document.querySelector('.content');
 const places = container.querySelector('.places');
+
+//Load initial cards
 const newPlaces = initialCards.map(card => makeCard(card));
 places.append(...newPlaces);
+
+//add event listener to the pop-up place pic display
+const picPopupDisplay = container.querySelector('.place-popup');
+picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleForm(picPopupDisplay));
+
 
 //Edit Profile Form
 const editProfileForm = container.querySelector('.edit-profile-form');
@@ -72,20 +78,27 @@ npfSaveButton.addEventListener('click', () => {
   toggleForm(newPlaceForm);
 });
 
-//Shared functions
-function toggleForm(form) {
-  form.classList.toggle('form_hide');
+//Toggle form to display or hide
+function toggleForm(section) {
+  section.classList.toggle('hide');
 }
+
+//Make each place card
 function makeCard(card) {
   const newPlace = placeTemplate.content.cloneNode(true);
   const placePic = newPlace.querySelector('.place__picture');
   placePic.src = card.link;
   placePic.alt = `Picture of ${card.name}`;
-  placePic.addEventListener("click", (evt) => evt.target.parentElement.remove());
+  placePic.addEventListener("click", (evt) => {
+    const thisPlace = evt.target.parentElement;
+    const formPic = picPopupDisplay.querySelector('.form__pic');
+    formPic.src = thisPlace.querySelector('.place__picture').src;
+    formPic.alt = thisPlace.querySelector('.place__picture').alt;
+    picPopupDisplay.querySelector('.form__pic-name').textContent = thisPlace.querySelector('.place__name').textContent;
+    toggleForm(picPopupDisplay);
+  });
   newPlace.querySelector('.place__name').textContent = card.name;
-  newPlace.querySelector('.heart-button').addEventListener("click", (evt) => evt.target.classList.toggle("heart-button_active"));
-  newPlace.querySelector('.trash-button').addEventListener("click", (evt) => evt.target.parentElement.remove());
+  newPlace.querySelector('.heart-button').addEventListener('click', (evt) => evt.target.classList.toggle("heart-button_active"));
+  newPlace.querySelector('.trash-button').addEventListener('click', (evt) => evt.target.parentElement.remove());
   return newPlace;
 }
-
-

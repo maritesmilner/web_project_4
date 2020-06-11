@@ -1,0 +1,10 @@
+.form_display_pic {
+  max-width: 75vw;
+  max-height: 75vh;
+  background-color: #FFFFFF;
+  box-shadow: none;
+  border-radius: 0;
+  display: block;
+  padding: 0;
+  /* border: solid red; */
+}
