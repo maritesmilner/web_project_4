@@ -24,18 +24,41 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-const placeTemplate = document.getElementById('place-template');
 const container = document.querySelector('.content');
-const places = container.querySelector('.places');
-
-//Load initial cards
-const newPlaces = initialCards.map(card => makeCard(card));
-places.append(...newPlaces);
 
 //add event listener to the pop-up place pic display
 const picPopupDisplay = container.querySelector('.place-popup');
 picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleForm(picPopupDisplay));
 
+//Make each place card
+function makeCard(card) {
+  const newPlace = document.getElementById('place-template').content.cloneNode(true);
+  const placePic = newPlace.querySelector('.place__picture');
+  placePic.src = card.link;
+  placePic.alt = `Picture of ${card.name}`;
+  placePic.addEventListener("click", (evt) => {
+    const thisPlace = evt.target.parentElement;
+    const formPic = picPopupDisplay.querySelector('.form__pic');
+    formPic.src = thisPlace.querySelector('.place__picture').src;
+    formPic.alt = thisPlace.querySelector('.place__picture').alt;
+    picPopupDisplay.querySelector('.form__pic-name').textContent = thisPlace.querySelector('.place__name').textContent;
+    toggleForm(picPopupDisplay);
+  });
+  newPlace.querySelector('.place__name').textContent = card.name;
+  newPlace.querySelector('.heart-button').addEventListener('click', (evt) => evt.target.classList.toggle("heart-button_active"));
+  newPlace.querySelector('.trash-button').addEventListener('click', (evt) => evt.target.parentElement.remove());
+  return newPlace;
+}
+
+//Load initial cards
+const places = container.querySelector('.places');
+const newPlaces = initialCards.map(card => makeCard(card));
+places.append(...newPlaces);
+
+//Toggle form to display or hide
+function toggleForm(section) {
+  section.classList.toggle('hide');
+}
 
 //Edit Profile Form
 const editProfileForm = container.querySelector('.edit-profile-form');
@@ -60,14 +83,32 @@ edfCloseButton.addEventListener('click', () => toggleForm(editProfileForm));
 
 //New Place Form
 const addButton = container.querySelector('.add-button');
+addButton.addEventListener('click', () => toggleForm(newPlaceForm));
 const newPlaceForm = container.querySelector('.new-place-form');
 const npfCloseButton = newPlaceForm.querySelector('.form__close-button');
-const npfSaveButton = newPlaceForm.querySelector('.form__save-button');
-addButton.addEventListener('click', () => toggleForm(newPlaceForm));
 npfCloseButton.addEventListener('click', () => toggleForm(newPlaceForm));
+const npfSaveButton = newPlaceForm.querySelector('.form__save-button');
+let name = newPlaceForm.querySelector('.form__input_type_title');
+let link = newPlaceForm.querySelector('.form__input_type_link');
+name.addEventListener('keyup', (evt) => {
+  if (isEnterKey(evt)) {
+    npfSaveButton.click();
+  }
+});
+link.addEventListener('keyup', (evt) => {
+  if (isEnterKey(evt)) {
+    npfSaveButton.click();
+  }
+});
+function isEnterKey(evt) {
+  if (evt.keyCode === 13) {
+    // Cancel the default action, if needed
+    evt.preventDefault();
+    // Trigger the button element with a click
+    return true;
+  }
+}
 npfSaveButton.addEventListener('click', () => {
-  let name = newPlaceForm.querySelector('.form__input_type_title');
-  let link = newPlaceForm.querySelector('.form__input_type_link');
   const card = {
     name: name.value,
     link: link.value
@@ -78,27 +119,6 @@ npfSaveButton.addEventListener('click', () => {
   toggleForm(newPlaceForm);
 });
 
-//Toggle form to display or hide
-function toggleForm(section) {
-  section.classList.toggle('hide');
-}
 
-//Make each place card
-function makeCard(card) {
-  const newPlace = placeTemplate.content.cloneNode(true);
-  const placePic = newPlace.querySelector('.place__picture');
-  placePic.src = card.link;
-  placePic.alt = `Picture of ${card.name}`;
-  placePic.addEventListener("click", (evt) => {
-    const thisPlace = evt.target.parentElement;
-    const formPic = picPopupDisplay.querySelector('.form__pic');
-    formPic.src = thisPlace.querySelector('.place__picture').src;
-    formPic.alt = thisPlace.querySelector('.place__picture').alt;
-    picPopupDisplay.querySelector('.form__pic-name').textContent = thisPlace.querySelector('.place__name').textContent;
-    toggleForm(picPopupDisplay);
-  });
-  newPlace.querySelector('.place__name').textContent = card.name;
-  newPlace.querySelector('.heart-button').addEventListener('click', (evt) => evt.target.classList.toggle("heart-button_active"));
-  newPlace.querySelector('.trash-button').addEventListener('click', (evt) => evt.target.parentElement.remove());
-  return newPlace;
-}
+
+

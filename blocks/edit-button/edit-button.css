@@ -8,6 +8,7 @@
   background-position: center;
   background-color: #000000;
   padding: 0;
+  transition: .5s ease;
 }
 .edit-button:hover {
   cursor: pointer;
