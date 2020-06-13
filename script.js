@@ -82,38 +82,14 @@ editProfileForm.querySelector('.form__close-button').addEventListener('click', (
 //New Place Form
 const newPlaceSection = container.querySelector('.new-place-form');
 const newPlaceForm = newPlaceSection.querySelector('.form');
-const nameField = newPlaceForm.querySelector('.form__input_type_title');
-const linkField = newPlaceForm.querySelector('.form__input_type_link');
-//new place form handler
-function submitForm(form, evt) {
+newPlaceForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const card = {
-    name: nameField.value,
-    link: linkField.value
+    name: newPlaceForm.querySelector('.form__input_type_title').value,
+    link: newPlaceForm.querySelector('.form__input_type_link').value
   };
   places.prepend(makeCard(card));
-  form.reset();
-}
-//helper function to determine if Enter key was pressed
-const ENTER_KEY_CODE = 13;
-function isEnterKey(evt) {
-  if (evt.keyCode === ENTER_KEY_CODE) {
-    evt.preventDefault();
-    return true;
-  }
-}
-nameField.addEventListener('keyup', (evt) => {
-  if (isEnterKey(evt)) {
-    submitForm(newPlaceForm, evt);
-  }
-});
-linkField.addEventListener('keyup', (evt) => {
-  if (isEnterKey(evt)) {
-    submitForm(newPlaceForm, evt);
-  }
-});
-newPlaceForm.addEventListener('submit', (evt) => {
-  submitForm(newPlaceForm, evt);
+  newPlaceForm.reset();
   toggleDisplay(newPlaceSection);
 });
 container.querySelector('.add-button').addEventListener('click', () => toggleDisplay(newPlaceSection));
