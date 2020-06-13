@@ -44,23 +44,23 @@
        </section>
        <section class="new-place-form hide">
         <div class="overlay"></div>
-        <div class="form">
+        <form class="form" action="">
           <h2 class="form__title">New Place</h2>
           <input type="text" placeholder="Title" class="form__input form__input_type_title">
           <input type="text" placeholder="Image Link" class="form__input form__input_type_link">
-          <button class="form__save-button">
+          <button type="submit" class="form__save-button">
             Create
           </button>
-          <button class="form__close-button"></button>
-        </div>
+          <button type="button" class="form__close-button"></button>
+        </form>
        </section>
        <section class="place-popup hide">
-        <div class="overlay overlay_opacity_90"></div>
-        <div class="form form_display_pic">
+        <div class="overlay overlay_opacity_darker"></div>
+        <figure class="form form_display_pic">
           <img src="" alt="" class="form__pic">
-          <h3 class="form__pic-name"></h3>
+          <figcaption class="form__pic-name"></figcaption>
           <button class="form__close-button"></button>
-        </div>
+        </figure>
        </section>
     </main>
     <footer>

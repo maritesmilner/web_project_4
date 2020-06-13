@@ -26,9 +26,14 @@ const initialCards = [
 ];
 const container = document.querySelector('.content');
 
-//add event listener to the pop-up place pic display
+//Toggle to display or hide section
+function toggleDisplay(section) {
+  section.classList.toggle('hide');
+}
+
+//Add event listener to the pop-up place pic display
 const picPopupDisplay = container.querySelector('.place-popup');
-picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleForm(picPopupDisplay));
+picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(picPopupDisplay));
 
 //Make each place card
 function makeCard(card) {
@@ -42,7 +47,7 @@ function makeCard(card) {
     formPic.src = thisPlace.querySelector('.place__picture').src;
     formPic.alt = thisPlace.querySelector('.place__picture').alt;
     picPopupDisplay.querySelector('.form__pic-name').textContent = thisPlace.querySelector('.place__name').textContent;
-    toggleForm(picPopupDisplay);
+    toggleDisplay(picPopupDisplay);
   });
   newPlace.querySelector('.place__name').textContent = card.name;
   newPlace.querySelector('.heart-button').addEventListener('click', (evt) => evt.target.classList.toggle("heart-button_active"));
@@ -52,19 +57,12 @@ function makeCard(card) {
 
 //Load initial cards
 const places = container.querySelector('.places');
-const newPlaces = initialCards.map(card => makeCard(card));
+const newPlaces = initialCards.map((card) => makeCard(card));
 places.append(...newPlaces);
-
-//Toggle form to display or hide
-function toggleForm(section) {
-  section.classList.toggle('hide');
-}
 
 //Edit Profile Form
 const editProfileForm = container.querySelector('.edit-profile-form');
 const editButton = container.querySelector('.edit-button');
-const edfCloseButton = editProfileForm.querySelector('.form__close-button');
-const edfSaveButton = editProfileForm.querySelector('.form__save-button');
 const profileName = container.querySelector('.profile__name');
 const profileTitle = container.querySelector('.profile__title');
 const profileNameField = editProfileForm.querySelector('.form__input_type_name');
@@ -72,53 +70,51 @@ const profileTitleField = editProfileForm.querySelector('.form__input_type_title
 editButton.addEventListener('click', () => {
   profileNameField.value = profileName.textContent;
   profileTitleField.value = profileTitle.textContent;
-  toggleForm(editProfileForm);
+  toggleDisplay(editProfileForm);
 });
-edfSaveButton.addEventListener('click', () => {
+editProfileForm.querySelector('.form__save-button').addEventListener('click', () => {
   profileName.textContent = profileNameField.value;
   profileTitle.textContent = profileTitleField.value;
-  toggleForm(editProfileForm);
+  toggleDisplay(editProfileForm);
 });
-edfCloseButton.addEventListener('click', () => toggleForm(editProfileForm));
+editProfileForm.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(editProfileForm));
 
 //New Place Form
-const addButton = container.querySelector('.add-button');
-addButton.addEventListener('click', () => toggleForm(newPlaceForm));
-const newPlaceForm = container.querySelector('.new-place-form');
-const npfCloseButton = newPlaceForm.querySelector('.form__close-button');
-npfCloseButton.addEventListener('click', () => toggleForm(newPlaceForm));
-const npfSaveButton = newPlaceForm.querySelector('.form__save-button');
-let name = newPlaceForm.querySelector('.form__input_type_title');
-let link = newPlaceForm.querySelector('.form__input_type_link');
-name.addEventListener('keyup', (evt) => {
-  if (isEnterKey(evt)) {
-    npfSaveButton.click();
-  }
-});
-link.addEventListener('keyup', (evt) => {
-  if (isEnterKey(evt)) {
-    npfSaveButton.click();
-  }
-});
+const newPlaceSection = container.querySelector('.new-place-form');
+const newPlaceForm = newPlaceSection.querySelector('.form');
+const nameField = newPlaceForm.querySelector('.form__input_type_title');
+const linkField = newPlaceForm.querySelector('.form__input_type_link');
+//new place form handler
+function submitForm(form, evt) {
+  evt.preventDefault();
+  const card = {
+    name: nameField.value,
+    link: linkField.value
+  };
+  places.prepend(makeCard(card));
+  form.reset();
+}
+//helper function to determine if Enter key was pressed
+const ENTER_KEY_CODE = 13;
 function isEnterKey(evt) {
-  if (evt.keyCode === 13) {
-    // Cancel the default action, if needed
+  if (evt.keyCode === ENTER_KEY_CODE) {
     evt.preventDefault();
-    // Trigger the button element with a click
     return true;
   }
 }
-npfSaveButton.addEventListener('click', () => {
-  const card = {
-    name: name.value,
-    link: link.value
-  };
-  places.prepend(makeCard(card));
-  name.value = "";
-  link.value = "";
-  toggleForm(newPlaceForm);
+nameField.addEventListener('keyup', (evt) => {
+  if (isEnterKey(evt)) {
+    submitForm(newPlaceForm, evt);
+  }
 });
-
-
-
-
+linkField.addEventListener('keyup', (evt) => {
+  if (isEnterKey(evt)) {
+    submitForm(newPlaceForm, evt);
+  }
+});
+newPlaceForm.addEventListener('submit', (evt) => {
+  submitForm(newPlaceForm, evt);
+  toggleDisplay(newPlaceSection);
+});
+container.querySelector('.add-button').addEventListener('click', () => toggleDisplay(newPlaceSection));
+newPlaceForm.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(newPlaceSection));
