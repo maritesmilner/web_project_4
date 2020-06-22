@@ -20,11 +20,11 @@
         <div class="profile__info">
           <div class="profile__person">
             <h1 class="profile__name">Jacques Cousteau</h1>
-            <button class="edit-button"></button>
+            <button class="edit-button" type="button" name="open-button" form="edit-profile"></button>
           </div>
           <p class="profile__title">Explorer</p>
         </div>
-        <button class="add-button"></button>
+        <button class="add-button" type="button" name="open-button" form="new-place"></button>
       </section>
       <section class="elements">
         <ul class="places">
@@ -32,22 +32,26 @@
       </section>
       <section class="edit-profile-form hide">
         <div class="overlay"></div>
-        <div class="form">
+        <form class="form" id="edit-profile" novalidate>
           <h2 class="form__title">Edit profile</h2>
-          <input type="text" placeholder="Name" class="form__input form__input_type_name">
-          <input type="text" placeholder="Title" class="form__input form__input_type_title">
-          <button class="form__save-button">
+          <input type="text" placeholder="Name" class="form__input form__input_type_name" id="name" minlength="2" maxlength="40" required>
+          <span class="form__input-error" id="name-error"></span>
+          <input type="text" placeholder="Title" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
+          <span class="form__input-error" id="title-error"></span>
+          <button type="submit" class="form__save-button">
             Save
           </button>
-          <button class="form__close-button"></button>
-        </div>
+          <button type="button" class="form__close-button"></button>
+        </form>
        </section>
        <section class="new-place-form hide">
         <div class="overlay"></div>
-        <form class="form" action="">
+        <form class="form" id="new-place" novalidate>
           <h2 class="form__title">New Place</h2>
-          <input type="text" placeholder="Title" class="form__input form__input_type_title">
-          <input type="text" placeholder="Image Link" class="form__input form__input_type_link">
+          <input type="text" placeholder="Title" class="form__input form__input_type_title" id="place-title" maxlength="30"required>
+          <span class="form__input-error" id="place-title-error"></span>
+          <input type="url" placeholder="Image Link" class="form__input form__input_type_link" id="link" required>
+          <span class="form__input-error" id="link-error"></span>
           <button type="submit" class="form__save-button">
             Create
           </button>
@@ -59,7 +63,7 @@
         <figure class="form form_display_pic">
           <img src="" alt="" class="form__pic">
           <figcaption class="form__pic-name"></figcaption>
-          <button class="form__close-button"></button>
+          <button type="button" class="form__close-button"></button>
         </figure>
        </section>
     </main>

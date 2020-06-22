@@ -24,73 +24,149 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-const container = document.querySelector('.content');
-
-//Toggle to display or hide section
-function toggleDisplay(section) {
-  section.classList.toggle('hide');
-}
-
-//Add event listener to the pop-up place pic display
-const picPopupDisplay = container.querySelector('.place-popup');
-picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(picPopupDisplay));
 
 //Make each place card
-function makeCard(card) {
+const makeCard = (card) => {
   const newPlace = document.getElementById('place-template').content.cloneNode(true);
   const placePic = newPlace.querySelector('.place__picture');
   placePic.src = card.link;
   placePic.alt = `Picture of ${card.name}`;
-  placePic.addEventListener("click", (evt) => {
+  newPlace.querySelector('.place__name').textContent = card.name;
+  return newPlace;
+}
+
+//Load initial cards
+const container = document.querySelector('.content');
+const places = container.querySelector('.places');
+const listOfPlaces = initialCards.map((card) => makeCard(card));
+places.append(...listOfPlaces);
+
+//Add event listeners to places
+const picPopupDisplay = container.querySelector('.place-popup');
+picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(picPopupDisplay));
+places.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains("heart-button")) {
+    evt.target.classList.toggle("heart-button_active");
+  }
+  else if (evt.target.classList.contains("trash-button")) {
+    evt.target.parentElement.remove();
+  }
+  else if (evt.target.classList.contains("place__picture")) {
     const thisPlace = evt.target.parentElement;
     const formPic = picPopupDisplay.querySelector('.form__pic');
     formPic.src = thisPlace.querySelector('.place__picture').src;
     formPic.alt = thisPlace.querySelector('.place__picture').alt;
     picPopupDisplay.querySelector('.form__pic-name').textContent = thisPlace.querySelector('.place__name').textContent;
     toggleDisplay(picPopupDisplay);
+  }
+});
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.add("form__input_type_error-indicator");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("form__input-error-msg");
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  console.log(`#${inputElement.id}-error`);
+  inputElement.classList.remove("form__input_type_error-indicator");
+  errorElement.classList.remove("form__input-error-msg");
+  errorElement.textContent = "";
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
   });
-  newPlace.querySelector('.place__name').textContent = card.name;
-  newPlace.querySelector('.heart-button').addEventListener('click', (evt) => evt.target.classList.toggle("heart-button_active"));
-  newPlace.querySelector('.trash-button').addEventListener('click', (evt) => evt.target.parentElement.remove());
-  return newPlace;
+};
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("form__save-button_disabled");
+    buttonElement.disabled = true;
+  } else {
+    buttonElement.classList.remove("form__save-button_disabled");
+    buttonElement.disabled = false;
+  }
+};
+
+//Process edit profile
+const processEditProfile = (form, action="submit") => {
+  const profileName = container.querySelector('.profile__name');
+  const profileTitle = container.querySelector('.profile__title');
+  const profileNameField = form.querySelector('.form__input_type_name');
+  const profileTitleField = form.querySelector('.form__input_type_title');
+  if (action === "open") {
+    profileNameField.value = profileName.textContent;
+    profileTitleField.value = profileTitle.textContent;
+  } else {
+    profileName.textContent = profileNameField.value;
+    profileTitle.textContent = profileTitleField.value;
+  }
 }
 
-//Load initial cards
-const places = container.querySelector('.places');
-const newPlaces = initialCards.map((card) => makeCard(card));
-places.append(...newPlaces);
+//Toggle to display or hide section
+function toggleDisplay(section) {
+  section.classList.toggle('hide');
+  if (!section.classList.contains("hide") && section.classList.contains("edit-profile-form")) {
+    processEditProfile(document.getElementById("edit-profile"), "open");
+  }
+}
 
-//Edit Profile Form
-const editProfileForm = container.querySelector('.edit-profile-form');
-const editButton = container.querySelector('.edit-button');
-const profileName = container.querySelector('.profile__name');
-const profileTitle = container.querySelector('.profile__title');
-const profileNameField = editProfileForm.querySelector('.form__input_type_name');
-const profileTitleField = editProfileForm.querySelector('.form__input_type_title');
-editButton.addEventListener('click', () => {
-  profileNameField.value = profileName.textContent;
-  profileTitleField.value = profileTitle.textContent;
-  toggleDisplay(editProfileForm);
-});
-editProfileForm.querySelector('.form__save-button').addEventListener('click', () => {
-  profileName.textContent = profileNameField.value;
-  profileTitle.textContent = profileTitleField.value;
-  toggleDisplay(editProfileForm);
-});
-editProfileForm.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(editProfileForm));
+//Set event listeners for each form element
+const setEventListeners = (form) => {
+  const inputList = Array.from(form.querySelectorAll(".form__input"));
+  const submitButton = form.querySelector(".form__save-button");
+  toggleButtonState(inputList, submitButton);
+  const closeButton = form.querySelector('.form__close-button')
+  closeButton.addEventListener('click', () => toggleDisplay(form.parentElement));
+  const openButton = document.getElementById(form.id).elements["open-button"];
+  openButton.addEventListener('click', () => toggleDisplay(form.parentElement));
 
-//New Place Form
-const newPlaceSection = container.querySelector('.new-place-form');
-const newPlaceForm = newPlaceSection.querySelector('.form');
-newPlaceForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      checkInputValidity(form, inputElement);
+      toggleButtonState(inputList, submitButton);
+    });
+  });
+};
+
+//Process adding of new place
+const processNewPlace = (form) => {
   const card = {
-    name: newPlaceForm.querySelector('.form__input_type_title').value,
-    link: newPlaceForm.querySelector('.form__input_type_link').value
+    name: form.querySelector('.form__input_type_title').value,
+    link: form.querySelector('.form__input_type_link').value
   };
   places.prepend(makeCard(card));
-  newPlaceForm.reset();
-  toggleDisplay(newPlaceSection);
-});
-container.querySelector('.add-button').addEventListener('click', () => toggleDisplay(newPlaceSection));
-newPlaceForm.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(newPlaceSection));
+}
+
+const enableValidation = () => {
+  const formList = Array.from(document.forms);
+  formList.forEach((form) => {
+    form.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+      if (form.id === "edit-profile") {
+        processEditProfile(form);
+      } else if (form.id === "new-place") {
+        processNewPlace(form);
+      }
+      form.reset();
+      toggleDisplay(form.parentElement);
+      const inputList = Array.from(form.querySelectorAll(".form__input"));
+      const submitButton = form.querySelector(".form__save-button");
+      toggleButtonState(inputList, submitButton);
+    });
+    setEventListeners(form);
+  });
+};
+
+enableValidation();
