@@ -41,8 +41,22 @@ const places = container.querySelector('.places');
 const listOfPlaces = initialCards.map((card) => makeCard(card));
 places.append(...listOfPlaces);
 
-//Add event listeners to places
+//Toggle to display or hide section
+function toggleDisplay(section) {
+  section.classList.toggle('hide');
+  if (!section.classList.contains("hide") && section.classList.contains("edit-profile-form")) {
+    processEditProfile(document.getElementById("edit-profile"), "open");
+  }
+}
+
+//Add event listeners to places related elements
 const picPopupDisplay = container.querySelector('.place-popup');
+picPopupDisplay.querySelector('.overlay').addEventListener('click', () => toggleDisplay(picPopupDisplay));
+window.addEventListener('keyup', (evt) => {
+  if (!picPopupDisplay.classList.contains("hide") && evt.key === "Escape") {
+    toggleDisplay(picPopupDisplay);
+  }
+});
 picPopupDisplay.querySelector('.form__close-button').addEventListener('click', () => toggleDisplay(picPopupDisplay));
 places.addEventListener('click', (evt) => {
   if (evt.target.classList.contains("heart-button")) {
@@ -61,44 +75,6 @@ places.addEventListener('click', (evt) => {
   }
 });
 
-const checkInputValidity = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(formElement, inputElement);
-  }
-};
-
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  inputElement.classList.add("form__input_type_error-indicator");
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add("form__input-error-msg");
-};
-
-const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  console.log(`#${inputElement.id}-error`);
-  inputElement.classList.remove("form__input_type_error-indicator");
-  errorElement.classList.remove("form__input-error-msg");
-  errorElement.textContent = "";
-};
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  });
-};
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add("form__save-button_disabled");
-    buttonElement.disabled = true;
-  } else {
-    buttonElement.classList.remove("form__save-button_disabled");
-    buttonElement.disabled = false;
-  }
-};
-
 //Process edit profile
 const processEditProfile = (form, action="submit") => {
   const profileName = container.querySelector('.profile__name');
@@ -114,32 +90,6 @@ const processEditProfile = (form, action="submit") => {
   }
 }
 
-//Toggle to display or hide section
-function toggleDisplay(section) {
-  section.classList.toggle('hide');
-  if (!section.classList.contains("hide") && section.classList.contains("edit-profile-form")) {
-    processEditProfile(document.getElementById("edit-profile"), "open");
-  }
-}
-
-//Set event listeners for each form element
-const setEventListeners = (form) => {
-  const inputList = Array.from(form.querySelectorAll(".form__input"));
-  const submitButton = form.querySelector(".form__save-button");
-  toggleButtonState(inputList, submitButton);
-  const closeButton = form.querySelector('.form__close-button')
-  closeButton.addEventListener('click', () => toggleDisplay(form.parentElement));
-  const openButton = document.getElementById(form.id).elements["open-button"];
-  openButton.addEventListener('click', () => toggleDisplay(form.parentElement));
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", function () {
-      checkInputValidity(form, inputElement);
-      toggleButtonState(inputList, submitButton);
-    });
-  });
-};
-
 //Process adding of new place
 const processNewPlace = (form) => {
   const card = {
@@ -149,24 +99,3 @@ const processNewPlace = (form) => {
   places.prepend(makeCard(card));
 }
 
-const enableValidation = () => {
-  const formList = Array.from(document.forms);
-  formList.forEach((form) => {
-    form.addEventListener("submit", function (evt) {
-      evt.preventDefault();
-      if (form.id === "edit-profile") {
-        processEditProfile(form);
-      } else if (form.id === "new-place") {
-        processNewPlace(form);
-      }
-      form.reset();
-      toggleDisplay(form.parentElement);
-      const inputList = Array.from(form.querySelectorAll(".form__input"));
-      const submitButton = form.querySelector(".form__save-button");
-      toggleButtonState(inputList, submitButton);
-    });
-    setEventListeners(form);
-  });
-};
-
-enableValidation();

@@ -7,7 +7,6 @@
 @import url('./__close-button/form__close-button.css');
 @import url('./__pic/form__pic.css');
 @import url('./__pic-name/form__pic-name.css');
-@import url('./__set/form__set.css');
 
 .form {
   max-width: 240px;
