@@ -1,7 +1,9 @@
-import { Document } from "./document.js";
-import { Card } from "./card.js";
-import { Popup } from "./popup.js";
-import { EditProfilePopup } from "./edit-profile-popup.js";
+import { Document } from "./Document.js";
+import { Card } from "./Card.js";
+import { Popup } from "./Popup.js";
+import { EditProfilePopup } from "./EditProfilePopup.js";
+import { NewPlacePopup } from "./NewPlacePopup.js";
+import { FormValidator } from "./FormValidator.js";
 
 const doc = new Document();
 const conf = doc.getConfig();
@@ -42,32 +44,31 @@ const listOfPlaces = initialCards.map((card) => {
 places.append(...listOfPlaces);
 
 doc.getEditButton().addEventListener(conf.getClickEvent(), () => {
-  const formSection = doc.getFormSectionElement(conf.getEditFormSectionSelector());
-  const popup = new EditProfilePopup(formSection);
-  popup.display();
+  const validator = new FormValidator();
+  const formSectionElement = doc.getFormSectionElement(conf.getEditFormSectionSelector());
+  const formObject = new EditProfilePopup(formSectionElement);
+  validator.enableValidation({
+    formObject: formObject,
+    inactiveButtonClass: conf.getInactiveSaveButtonClass(),
+    inputErrorClass: conf.getInputErrorIndicatorClass(),
+    errorClass: conf.getInputErrorMsgClass()
+  });
+  formObject.display();
 });
-doc.getNewPlaceButton().addEventListener(conf.getClickEvent(), () => {
-  const formSection = doc.getFormSectionElement(conf.getNewPlaceFormSectionSelector());
-  const popup = new Popup(formSection);
-  popup.toggleDisplay();
-  popup.addCloseEventListener();
-});
+doc.getAddButton().addEventListener(conf.getClickEvent(), () => {
+  const validator = new FormValidator();
+  const formSectionElement = doc.getFormSectionElement(conf.getNewPlaceFormSectionSelector());
+  const formObject = new NewPlacePopup(formSectionElement);
+  validator.enableValidation({
+    formObject: formObject,
+    inactiveButtonClass: conf.getInactiveSaveButtonClass(),
+    inputErrorClass: conf.getInputErrorIndicatorClass(),
+    errorClass: conf.getInputErrorMsgClass()
+  });
+  formObject.toggleDisplay();
+  formObject.addCloseEventListener();
+})
 
-// //Add event listeners to new place form related elements
-// const newPlaceFormSection = container.querySelector(NEW_PLACE_FORM_SECTION_SELECTOR);
-// const addButton = container.querySelector(ADD_BUTTON_SELECTOR);
-// addButton.addEventListener(CLICK_EVENT, () => toggleDisplay(newPlaceFormSection));
-// const addCloseButton = newPlaceFormSection.querySelector(CLOSE_BUTTON_SELECTOR)
-// addCloseButton.addEventListener(CLICK_EVENT, () => toggleDisplay(newPlaceFormSection));
-
-// //Add event listeners to places related elements
-// const picPopupDisplay = container.querySelector(PLACE_POP_UP_SELECTOR);
-// picPopupDisplay.querySelector(OVERLAY_SELECTOR).addEventListener(CLICK_EVENT, () => toggleDisplay(picPopupDisplay));
-// window.addEventListener(KEYUP_EVENT, (evt) => {
-//   if (!picPopupDisplay.classList.contains(HIDE_CLASS) && evt.key === ESCAPE_KEY) {
-//     toggleDisplay(picPopupDisplay);
-//   }
-// });
 
 // //Process form action
 // const processForm = (form, action=SUBMIT_ACTION) => {

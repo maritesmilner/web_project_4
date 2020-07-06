@@ -1,4 +1,4 @@
-import {Config} from "./config.js";
+import {Config} from "./Config.js";
 
 export class Document {
   constructor() {
@@ -8,16 +8,42 @@ export class Document {
     this._places = this._container.querySelector(this._config.getPlacesSelector());
     this._profileName = this._container.querySelector(this._config.getProfileNameSelector());
     this._profileTitle = this._container.querySelector(this._config.getProfileTitleSelector());
-    this._templateElement = document.getElementById(this._config.getPlaceTemplateId());
-    this._editButton = this._container.querySelector(this._config.getEditButtonSelector());
-    this._newPlaceButton = this._container.querySelector(this._config.getAddButtonSelector());
     Document._instance = this;
   }
+
+  getAddButton() {
+    return this._container.querySelector(this._config.getAddButtonSelector());
+  }
+  getEditButton() {
+    return this._container.querySelector(this._config.getEditButtonSelector());
+  }
+  getFormErrorElement(formElement, inputElement) {
+    console.log(formElement);
+    return formElement.querySelector(`#${inputElement.id}-error`);
+  }
+  getFormSaveButtonElement(formElement) {
+    return formElement.querySelector(this._config.getFormSaveButtonSelector());
+  }
+
+  getFormInputList(formElement) {
+    return [...formElement.querySelectorAll(this._config.getInputSelector())];
+  }
+  getSaveButton(formElement) {
+    return formElement.querySelector(this._config.getSubmitAction());
+  }
+
   getNewPlaceButton() { return this._newPlaceButton; }
   getFormSectionElement(selector) {
     return this._container.querySelector(selector);
   }
-  getEditButton() { return this._editButton; }
+
+  getPlaceLinkField(formElement) {
+    return formElement.querySelector(this._config.getPlaceLinkFieldSelector());
+  };
+  getPlaceTitleField(formElement) {
+    return formElement.querySelector(this._config.getPlaceTitleFieldSelector());
+  };
+
   getProfileName() { return this._profileName; }
   getProfileTitle() { return this._profileTitle; }
   getProfileTitleField(popupForm) {
@@ -36,11 +62,11 @@ export class Document {
   getPlaces() {
     return this._places;
   }
-  getPopupForm(popupSectionElement) {
-    return popupSectionElement.querySelector(this._config.getFormSelector());
+  getFormElement(formSectionElement) {
+    return formSectionElement.querySelector(this._config.getFormSelector());
   }
   getTemplateElement() {
-    return this._templateElement;
+    return document.getElementById(this._config.getPlaceTemplateId());
   }
   getFormPic(popupForm) {
     return popupForm.querySelector(this._config.getFormPicSelector());

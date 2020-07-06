@@ -1,13 +1,12 @@
-import { Document } from "./document.js";
+import { Document } from "./Document.js";
 
 export class Popup {
   constructor(popupSectionElement) {
     this._doc = new Document();
     this._config = this._doc.getConfig();
     this._popupSectionElement = popupSectionElement;
-    this._popupForm = this._doc.getPopupForm(popupSectionElement);
-    this._closeButton = this._doc.getCloseButton(this._popupForm);
-    //this._event = event;
+    this._formElement = this._doc.getFormElement(popupSectionElement);
+    this._closeButton = this._doc.getCloseButton(this._formElement);
   }
 
   toggleDisplay() {
@@ -15,16 +14,17 @@ export class Popup {
   }
 
   addCloseEventListener() {
-    const listener =  () => {
+    const handler =  () => {
       this.toggleDisplay();
-      this._closeButton.removeEventListener(this._config.getClickEvent(), listener);
+      this._closeButton.removeEventListener(this._config.getClickEvent(), handler);
     }
-    this._closeButton.addEventListener(this._config.getClickEvent(), listener);
+    this._closeButton.addEventListener(this._config.getClickEvent(), handler);
   }
 
-  //getters for private fields
   getDoc() { return this._doc; }
-  //getEvent() { return this._event; }
-  getPopupForm() { return this._popupForm; }
-
+  getFormElement() { return this._formElement }
+  getInputList() {
+    return this._doc.getFormInputList(this.getFormElement());
+  }
 }
+

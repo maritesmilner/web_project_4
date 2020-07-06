@@ -1,5 +1,5 @@
-import {Config} from "./config.js";
-import {PlacePopup} from "./place-popup.js";
+import {Config} from "./Config.js";
+import {PlacePopup} from "./PlacePopup.js";
 
 export class Card {
   constructor(placeName, imageURL, templateElement) {

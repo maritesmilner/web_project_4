@@ -38,7 +38,7 @@
           <span class="form__input-error" id="name-error"></span>
           <input type="text" placeholder="Title" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
           <span class="form__input-error" id="title-error"></span>
-          <button type="submit" class="form__save-button">
+          <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Save
           </button>
           <button type="button" class="form__close-button"></button>
@@ -52,7 +52,7 @@
           <span class="form__input-error" id="place-title-error"></span>
           <input type="url" placeholder="Image Link" class="form__input form__input_type_link" id="link" required>
           <span class="form__input-error" id="link-error"></span>
-          <button type="submit" class="form__save-button">
+          <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Create
           </button>
           <button type="button" class="form__close-button"></button>
@@ -82,6 +82,6 @@
     </li>
   </template>
   <script type="module" src="./script.js"></script>
-  <script src="./validate.js"></script>
+  <!-- <script src="./validate.js"></script> -->
 </body>
 </html>
