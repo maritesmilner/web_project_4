@@ -13,7 +13,27 @@ export class PlacePopup extends Popup {
     formPic.src = this.getDoc().getPlacePic(place).src;
     formPic.alt = this.getDoc().getPlacePic(place).alt;
     formPlace.textContent = this.getDoc().getPlaceName(place).textContent;
+    this._addEscapeKeyEventListener();
+    this._addOverlayEventListener();
     this.addCloseEventListener();
     this.toggleDisplay();
+  }
+
+  _addEscapeKeyEventListener() {
+    this._escapeHandler = (e) => {
+      if (e.key === this.getConfig().getEscapeKey()) {
+        this.toggleDisplay();
+        this.removeEventListeners();
+      }
+    }
+    document.addEventListener(this.getConfig().getKeyUpEvent(), this._escapeHandler);
+  }
+  _addOverlayEventListener() {
+    this._overlayHandler = (e) => {
+      this.toggleDisplay();
+      this.removeEventListeners();
+    }
+    this._overlayElement.addEventListener(this.getConfig().getClickEvent(), this._overlayHandler);
+
   }
 }

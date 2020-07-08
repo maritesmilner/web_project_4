@@ -52,6 +52,7 @@ export class Config {
   getEditButtonSelector() { return this._EDIT_BUTTON_SELECTOR; }
   getEditFormSectionClass() { return this._EDIT_FORM_SECTION_CLASS; }
   getEditFormSectionSelector() { return this._EDIT_FORM_SECTION_SELECTOR; }
+  getEscapeKey() { return this._ESCAPE_KEY; }
   getFormPicNameSelector() { return this._FORM_PIC_NAME_SELECTOR; }
   getFormPicSelector() { return this._FORM_PIC_SELECTOR; }
   getFormSaveButtonSelector() { return this._FORM_SAVE_BUTTON_SELECTOR; }
@@ -62,10 +63,13 @@ export class Config {
   getInputErrorMsgClass() { return this._INPUT_ERROR_MSG_CLASS; }
   getInputEvent() { return this._INPUT_EVENT; }
   getInputSelector() { return this._INPUT_SELECTOR; }
+  getKeyUpEvent() { return this._KEYUP_EVENT; }
   getLikeButtonActiveClass() { return this._HEART_BUTTON_ACTIVE_CLASS; }
   getLikeButtonClass() { return this._HEART_BUTTON_CLASS; }
   getNewPlaceFormSectionSelector() { return this._NEW_PLACE_FORM_SECTION_SELECTOR; }
   getOpenAction() { return this._OPEN_ACTION; }
+  getPageOverlaySelector() { return this._OVERLAY_SELECTOR; }
+  getPlaceSelector() { return this._PLACE_SELECTOR; }
   getPlaceLinkFieldSelector() { return this._INPUT_TYPE_LINK_SELECTOR; }
   getPlaceTitleFieldSelector() { return this._INPUT_TYPE_TITLE_SELECTOR; }
   getPlaceNameSelector() { return this._PLACE_NAME_SELECTOR; }

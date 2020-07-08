@@ -1,12 +1,13 @@
-import {Config} from "./Config.js";
-import {PlacePopup} from "./PlacePopup.js";
+import { Document } from "./Document.js";
+import { PlacePopup } from "./PlacePopup.js";
 
 export class Card {
   constructor(placeName, imageURL, templateElement) {
     this._placeName = placeName;
     this._imageURL = imageURL;
     this._templateElement = templateElement;
-    this._config = new Config();
+    this._doc = new Document();
+    this._config = this._doc.getConfig();
   }
   _handleLikeEvent(e) {
     e.target.classList.toggle(this._config.getLikeButtonActiveClass());
@@ -19,13 +20,13 @@ export class Card {
     popup.display();
   }
   _setCard () {
-    const newPlace = this._templateElement.content.cloneNode(true);
-    const placePic = newPlace.querySelector(this._config.getPlacePicSelector());
+    const place = this._templateElement.content.cloneNode(true);
+    const newPlace = this._doc.getPlaceElement(place);
+    const placePic = this._doc.getPlacePic(newPlace);
     placePic.src = this._imageURL;
     placePic.alt = `Picture of ${this._placeName}`;
-    newPlace.querySelector(this._config.getPlaceNameSelector()).textContent = this._placeName;
-    const place = newPlace.querySelector(this._config.getPlaceSelector());
-    place.addEventListener(this._config.getClickEvent(), (e) => {
+    this._doc.getPlaceName(newPlace).textContent = this._placeName;
+    newPlace.addEventListener(this._config.getClickEvent(), (e) => {
       if (e.target.classList.contains(this._config.getLikeButtonClass())) {
         this._handleLikeEvent(e);
       }

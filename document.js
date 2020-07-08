@@ -14,71 +14,72 @@ export class Document {
   getAddButton() {
     return this._container.querySelector(this._config.getAddButtonSelector());
   }
-  getEditButton() {
-    return this._container.querySelector(this._config.getEditButtonSelector());
-  }
-  getFormErrorElement(formElement, inputElement) {
-    console.log(formElement);
-    return formElement.querySelector(`#${inputElement.id}-error`);
-  }
-  getFormSaveButtonElement(formElement) {
-    return formElement.querySelector(this._config.getFormSaveButtonSelector());
-  }
-
-  getFormInputList(formElement) {
-    return [...formElement.querySelectorAll(this._config.getInputSelector())];
-  }
-  getSaveButton(formElement) {
-    return formElement.querySelector(this._config.getSubmitAction());
-  }
-
-  getNewPlaceButton() { return this._newPlaceButton; }
-  getFormSectionElement(selector) {
-    return this._container.querySelector(selector);
-  }
-
-  getPlaceLinkField(formElement) {
-    return formElement.querySelector(this._config.getPlaceLinkFieldSelector());
-  };
-  getPlaceTitleField(formElement) {
-    return formElement.querySelector(this._config.getPlaceTitleFieldSelector());
-  };
-
-  getProfileName() { return this._profileName; }
-  getProfileTitle() { return this._profileTitle; }
-  getProfileTitleField(popupForm) {
-    return popupForm.querySelector(this._config.getProfileTitleFieldSelector());
-  }
-  getProfileNameField(popupForm) {
-    return popupForm.querySelector(this._config.getProfileNameFieldSelector());
-  }
-
   getCloseButton(popupForm) {
     return popupForm.querySelector(this._config.getCloseButtonSelector());
   }
   getConfig() {
     return this._config;
   }
-  getPlaces() {
-    return this._places;
+  getEditButton() {
+    return this._container.querySelector(this._config.getEditButtonSelector());
   }
   getFormElement(formSectionElement) {
     return formSectionElement.querySelector(this._config.getFormSelector());
   }
-  getTemplateElement() {
-    return document.getElementById(this._config.getPlaceTemplateId());
+  getFormErrorElement(formElement, inputElement) {
+    console.log(formElement);
+    return formElement.querySelector(`#${inputElement.id}-error`);
+  }
+  getFormInputList(formElement) {
+    return [...formElement.querySelectorAll(this._config.getInputSelector())];
   }
   getFormPic(popupForm) {
     return popupForm.querySelector(this._config.getFormPicSelector());
   }
+  getFormSectionElement(selector) {
+    return this._container.querySelector(selector);
+  }
+  getFormOverlayElement(formSectionElement) {
+    return formSectionElement.querySelector(this._config.getPageOverlaySelector());
+  }
   getFormPlaceName(popupForm) {
     return popupForm.querySelector(this._config.getFormPicNameSelector());
+  }
+  getFormSaveButtonElement(formElement) {
+    return formElement.querySelector(this._config.getFormSaveButtonSelector());
+  }
+  getNewPlaceButton() { return this._newPlaceButton; }
+  getSaveButton(formElement) {
+    return formElement.querySelector(this._config.getSubmitAction());
+  }
+  getPlaceElement(placeElement) {
+    return placeElement.querySelector(this._config.getPlaceSelector());
+  }
+  getPlaceLinkField(formElement) {
+    return formElement.querySelector(this._config.getPlaceLinkFieldSelector());
+  };
+  getPlaceName(placeElement) {
+    return placeElement.querySelector(this._config.getPlaceNameSelector());
   }
   getPlacePic(placeElement) {
     return placeElement.querySelector(this._config.getPlacePicSelector());
   }
-  getPlaceName(placeElement) {
-    return placeElement.querySelector(this._config.getPlaceNameSelector());
+  getPlaces() {
+    return this._places;
+  }
+  getPlaceTitleField(formElement) {
+    return formElement.querySelector(this._config.getPlaceTitleFieldSelector());
+  };
+  getProfileName() { return this._profileName; }
+  getProfileNameField(popupForm) {
+    return popupForm.querySelector(this._config.getProfileNameFieldSelector());
+  }
+  getProfileTitle() { return this._profileTitle; }
+  getProfileTitleField(popupForm) {
+    return popupForm.querySelector(this._config.getProfileTitleFieldSelector());
+  }
+  getTemplateElement() {
+    return document.getElementById(this._config.getPlaceTemplateId());
   }
 }
 

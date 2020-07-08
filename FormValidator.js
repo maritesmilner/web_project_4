@@ -2,7 +2,7 @@ import { Document } from "./Document.js";
 
 export class FormValidator {
   constructor () {
-    //if(FormValidator._instance) return FormValidator._instance;
+    if(FormValidator._instance) return FormValidator._instance;
     this._doc = new Document();
     this._config = this._doc.getConfig();
     FormValidator._instance = this;
@@ -40,15 +40,13 @@ export class FormValidator {
       this._hideInputError(formElement, inputElement, rest);
     }
   }
-  enableValidation({formObject, inactiveButtonClass, ...rest}) {
+  enableValidation({formObject, inactiveButtonClass, saveButtonElement, ...rest}) {
     const inputList = formObject.getInputList();
     const formElement = formObject.getFormElement();
-    console.log(formElement);
-    const saveButtonELement = this._doc.getFormSaveButtonElement(formElement);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener(this._config.getInputEvent(), () => {
         this._checkInputValidity(formElement, inputElement, rest);
-        this._toggleSubmitButtonState(inputList, saveButtonELement, inactiveButtonClass);
+        this._toggleSubmitButtonState(inputList, saveButtonElement, inactiveButtonClass);
       });
     });
   }
