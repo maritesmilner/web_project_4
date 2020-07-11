@@ -9,8 +9,8 @@ export class Card {
   _handleLikeEvent(e) {
     e.target.classList.toggle("heart-button_active");
   }
-  _handleDeleteEvent(e) {
-    e.target.parentElement.remove();
+  _handleDeleteEvent() {
+    this._card.remove();
   }
   _getCardTemplate() {
     return document
@@ -30,7 +30,7 @@ export class Card {
         this._handleLikeEvent(e);
       }
       if (e.target.classList.contains("trash-button")) {
-        this._handleDeleteEvent(e);
+        this._handleDeleteEvent();
       }
       if (e.target.classList.contains("place__picture")) {
         displayPlacePopup(e);
