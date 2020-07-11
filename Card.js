@@ -1,9 +1,9 @@
 import { displayPlacePopup } from "./util.js";
 export class Card {
-  constructor(placeName, imageURL, templateId) {
+  constructor(placeName, imageURL, templateSelector) {
     this._placeName = placeName;
     this._imageURL = imageURL;
-    this._templateId = templateId;
+    this._templateSelector = templateSelector;
     this._card = this._setCard();
   }
   _handleLikeEvent(e) {
@@ -12,12 +12,15 @@ export class Card {
   _handleDeleteEvent(e) {
     e.target.parentElement.remove();
   }
-  _setCard () {
-    console.log(this._templateId);
-    const templateElement = document.getElementById(this._templateId);
-    console.log(templateElement);
-    const placeTemplate = templateElement.content.cloneNode(true);
-    const newPlace = placeTemplate.querySelector(".place");
+  _getCardTemplate() {
+    return document
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector(".place")
+      .cloneNode(true);
+  }
+  _setCard() {
+    const newPlace = this._getCardTemplate();
     const placePic = newPlace.querySelector(".place__picture");
     placePic.src = this._imageURL;
     placePic.alt = `Picture of ${this._placeName}`;

@@ -33,7 +33,7 @@ const container = document.querySelector(".content");
 //Load initial cards
 const places = container.querySelector(".places");
 const listOfPlaces = initialCards.map((card) => {
-  return new Card(card.name, card.link, "place-template").getCard();
+  return new Card(card.name, card.link, ".place-template").getCard();
 });
 places.append(...listOfPlaces);
 
@@ -72,7 +72,7 @@ const processForm = (form, action="submit") => {
   else if (form.id === "new-place") {
     const name = form.querySelector(".form__input_type_title").value;
     const link = form.querySelector(".form__input_type_link").value
-    places.prepend(new Card(name, link, "place-template").getCard());
+    places.prepend(new Card(name, link, ".place-template").getCard());
   }
   if (action == "submit") {
     form.reset();
