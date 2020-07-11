@@ -1,5 +1,6 @@
 import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js"
+import { FormValidator } from "./FormValidator.js";
+import { toggleDisplay } from "./util.js";
 
 const initialCards = [
   {
@@ -30,27 +31,19 @@ const initialCards = [
 const container = document.querySelector(".content");
 
 //Load initial cards
-const cardTemplate = document.getElementById("place-template");
-const newPlace = cardTemplate.content.cloneNode(true);
 const places = container.querySelector(".places");
 const listOfPlaces = initialCards.map((card) => {
-  const newCard = new Card(card.name, card.link, cardTemplate);
-  return newCard.getCard();
+  return new Card(card.name, card.link, "place-template").getCard();
 });
 places.append(...listOfPlaces);
-
-//Toggle to display or hide section
-const toggleDisplay = (section) => {
-  section.classList.toggle("hide");
-  if (!section.classList.contains("hide") && section.classList.contains("edit-profile-form")) {
-    processForm(section.querySelector(".form"), "open");
-  }
-}
 
 //Add event listeners to edit profile form related elements
 const editFormSection = container.querySelector(".edit-profile-form");
 const editButton = container.querySelector(".edit-button");
-editButton.addEventListener("click", () => toggleDisplay(editFormSection));
+editButton.addEventListener("click", () => {
+  processForm(editFormSection.querySelector(".form"), "open");
+  toggleDisplay(editFormSection);
+});
 const editCloseButton = editFormSection.querySelector(".form__close-button")
 editCloseButton.addEventListener("click", () => toggleDisplay(editFormSection));
 
@@ -79,8 +72,7 @@ const processForm = (form, action="submit") => {
   else if (form.id === "new-place") {
     const name = form.querySelector(".form__input_type_title").value;
     const link = form.querySelector(".form__input_type_link").value
-    const card = new Card(name, link, cardTemplate);
-    places.prepend(card.getCard());
+    places.prepend(new Card(name, link, "place-template").getCard());
   }
   if (action == "submit") {
     form.reset();

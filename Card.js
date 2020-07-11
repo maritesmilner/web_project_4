@@ -1,9 +1,9 @@
-import { Util } from "./Util.js"
+import { displayPlacePopup } from "./util.js";
 export class Card {
-  constructor(placeName, imageURL, templateElement) {
+  constructor(placeName, imageURL, templateId) {
     this._placeName = placeName;
     this._imageURL = imageURL;
-    this._templateElement = templateElement;
+    this._templateId = templateId;
     this._card = this._setCard();
   }
   _handleLikeEvent(e) {
@@ -13,7 +13,10 @@ export class Card {
     e.target.parentElement.remove();
   }
   _setCard () {
-    const placeTemplate = this._templateElement.content.cloneNode(true);
+    console.log(this._templateId);
+    const templateElement = document.getElementById(this._templateId);
+    console.log(templateElement);
+    const placeTemplate = templateElement.content.cloneNode(true);
     const newPlace = placeTemplate.querySelector(".place");
     const placePic = newPlace.querySelector(".place__picture");
     placePic.src = this._imageURL;
@@ -23,11 +26,11 @@ export class Card {
       if (e.target.classList.contains("heart-button")) {
         this._handleLikeEvent(e);
       }
-      else if (e.target.classList.contains("trash-button")) {
+      if (e.target.classList.contains("trash-button")) {
         this._handleDeleteEvent(e);
       }
-      else if (e.target.classList.contains("place__picture")) {
-        new Util().displayPlacePopup(e);
+      if (e.target.classList.contains("place__picture")) {
+        displayPlacePopup(e);
       }
     })
     return newPlace;

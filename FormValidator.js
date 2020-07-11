@@ -7,7 +7,6 @@ export class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._inactiveButtonClass = inactiveButtonClass
-
   }
   _hasInvalidInput(inputList) {
     return inputList.some((inputElement) => {
