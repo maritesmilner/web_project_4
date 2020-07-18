@@ -6,7 +6,6 @@
   <meta name="description" content="Marites Milner's project 4 at Practicum by Yandex">
   <meta name="keywords" content="html, css, javascript">
   <meta name="author" content="Marites Milner">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Around The U.S.</title>
 </head>
 <body>
@@ -34,9 +33,9 @@
         <div class="overlay"></div>
         <form class="form" id="edit-profile" novalidate>
           <h2 class="form__title">Edit profile</h2>
-          <input type="text" placeholder="Name" class="form__input form__input_type_name" id="name" minlength="2" maxlength="40" required>
+          <input type="text" placeholder="Name" name="name" class="form__input form__input_type_name" id="name" minlength="2" maxlength="40" required>
           <span class="form__input-error" id="name-error"></span>
-          <input type="text" placeholder="Title" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
+          <input type="text" placeholder="Title" name="title" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
           <span class="form__input-error" id="title-error"></span>
           <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Save
@@ -48,9 +47,9 @@
         <div class="overlay"></div>
         <form class="form" id="new-place" novalidate>
           <h2 class="form__title">New Place</h2>
-          <input type="text" placeholder="Title" class="form__input form__input_type_title" id="place-title" maxlength="30" required>
+          <input type="text" placeholder="Title" name="name" class="form__input form__input_type_title" id="place-title" maxlength="30" required>
           <span class="form__input-error" id="place-title-error"></span>
-          <input type="url" placeholder="Image Link" class="form__input form__input_type_link" id="link" required>
+          <input type="url" placeholder="Image Link" name="link" class="form__input form__input_type_link" id="link" required>
           <span class="form__input-error" id="link-error"></span>
           <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Create
@@ -61,7 +60,7 @@
        <section class="place-popup hide">
         <div class="overlay overlay_opacity_darker"></div>
         <figure class="form form_display_pic">
-          <img src="" alt="" class="form__pic">
+          <img class="form__pic">
           <figcaption class="form__pic-name"></figcaption>
           <button type="button" class="form__close-button"></button>
         </figure>
@@ -73,7 +72,7 @@
   </div>
   <template class="place-template">
     <li class="place">
-      <img src="" alt="" class="place__picture">
+      <img class="place__picture">
       <button class="trash-button"></button>
       <div class="place__name-group">
         <h3 class="place__name"></h3>
@@ -81,6 +80,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./index.js"></script>
 </body>
 </html>

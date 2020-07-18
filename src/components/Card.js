@@ -1,9 +1,9 @@
-import { displayPlacePopup } from "./util.js";
-export class Card {
-  constructor(placeName, imageURL, templateSelector) {
+export default class Card {
+  constructor(placeName, imageURL, templateSelector, handleCardClick) {
     this._placeName = placeName;
     this._imageURL = imageURL;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
     this._card = this._setCard();
   }
   _handleLikeEvent(e) {
@@ -19,13 +19,8 @@ export class Card {
       .querySelector(".place")
       .cloneNode(true);
   }
-  _setCard() {
-    const newPlace = this._getCardTemplate();
-    const placePic = newPlace.querySelector(".place__picture");
-    placePic.src = this._imageURL;
-    placePic.alt = `Picture of ${this._placeName}`;
-    newPlace.querySelector(".place__name").textContent = this._placeName;
-    newPlace.addEventListener("click", (e) => {
+  _setEventListeners() {
+    this._card.addEventListener("click", (e) => {
       if (e.target.classList.contains("heart-button")) {
         this._handleLikeEvent(e);
       }
@@ -33,10 +28,18 @@ export class Card {
         this._handleDeleteEvent();
       }
       if (e.target.classList.contains("place__picture")) {
-        displayPlacePopup(e);
+        this._handleCardClick(this._card);
       }
     })
-    return newPlace;
+  }
+  _setCard() {
+    this._card = this._getCardTemplate();
+    const placePic = this._card.querySelector(".place__picture");
+    placePic.src = this._imageURL;
+    placePic.alt = `Picture of ${this._placeName}`;
+    this._card.querySelector(".place__name").textContent = this._placeName;
+    this._setEventListeners();
+    return this._card;
   }
   getCard() {
     return this._card;
