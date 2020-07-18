@@ -1,8 +1,6 @@
 import {
   profileName,
-  profileTitle,
-  profileNameField,
-  profileTitleField,
+  profileTitle
 } from "../utils/constants.js";
 
 export default class UserInfo {
@@ -18,7 +16,7 @@ export default class UserInfo {
 
   }
   setUserInfo() {
-    profileName.textContent = profileNameField.value;
-    profileTitle.textContent = profileTitleField.value;
+    profileName.textContent = this._name;
+    profileTitle.textContent = this._job;
   }
 }
