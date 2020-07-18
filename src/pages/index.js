@@ -12,10 +12,17 @@ import {
   profileNameField,
   profileTitleField,
   addButton,
-  initialCards
+  initialCards,
+  container
 } from "../utils/constants.js";
 
 const handleCardClick = (card) => {
+  const formSection = container.querySelector(".place-popup");
+  const formPic = formSection.querySelector(".form__pic");
+  formPic.src = card.querySelector(".place__picture").src;
+  formPic.alt = card.querySelector(".place__picture").alt;
+  const formPicName = formSection.querySelector(".form__pic-name");
+  formPicName.textContent = card.querySelector(".place__name").textContent;
   const popup = new PopupWithImage(".place-popup", card);
   popup.open();
 }

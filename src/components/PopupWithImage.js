@@ -29,12 +29,6 @@ export default class PopupWithImage extends Popup {
     super.getCloseButton().addEventListener("click", this._closeHandler);
   }
   open() {
-    const formSection = this.getPopup();
-    const formPic = formSection.querySelector(".form__pic");
-    formPic.src = this._card.querySelector(".place__picture").src;
-    formPic.alt = this._card.querySelector(".place__picture").alt;
-    const formPicName = formSection.querySelector(".form__pic-name");
-    formPicName.textContent = this._card.querySelector(".place__name").textContent;
     this._setEventListeners();
     super.open();
   }

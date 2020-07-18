@@ -24,7 +24,7 @@ export const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-const container = document.querySelector(".content");
+export const container = document.querySelector(".content");
 
 export const profileName = container.querySelector(".profile__name");
 export const profileTitle = container.querySelector(".profile__title");
