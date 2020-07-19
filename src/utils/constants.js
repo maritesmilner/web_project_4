@@ -24,19 +24,9 @@ export const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
-export const container = document.querySelector(".content");
-
-export const profileName = container.querySelector(".profile__name");
-export const profileTitle = container.querySelector(".profile__title");
+const container = document.querySelector(".content");
 export const editButton = container.querySelector(".edit-button");
-export const editFormSection = container.querySelector(".edit-profile-form");
-export const editCloseButton = editFormSection.querySelector(".form__close-button")
+const editFormSection = container.querySelector(".edit-profile-form");
 export const profileNameField = editFormSection.querySelector(".form__input_type_name");
 export const profileTitleField = editFormSection.querySelector(".form__input_type_title");
-
-export const newPlaceFormSection = container.querySelector(".new-place-form");
-export const placeNameField = newPlaceFormSection.querySelector(".form__input_type_title");
-export const placeLinkField = newPlaceFormSection.querySelector(".form__input_type_link");
-export const addCloseButton = newPlaceFormSection.querySelector(".form__close-button");
 export const addButton = container.querySelector(".add-button");
-export const places = container.querySelector(".places");

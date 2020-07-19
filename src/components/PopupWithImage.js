@@ -1,34 +1,30 @@
 import Popup from "./Popup.js"
 
 export default class PopupWithImage extends Popup {
-  constructor(popupSelector, card) {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._card = card;
-  }
-  _close() {
-    super.close();
-    document.removeEventListener("keyup", this._escapeHandler);
-    super.getOverlayElement().removeEventListener("click", this._overlayHandler);
-  }
-  _setEventListeners() {
-    this._escapeHandler =  (e) => {
-      if(e.key === "Escape") {
-        this._close();
-      }
-    }
-    document.addEventListener("keyup", this._escapeHandler);
-
     this._overlayHandler = () => {
       this._close();
     }
-    super.getOverlayElement().addEventListener("click", this._overlayHandler);
-
-    this._closeHandler =  () => {
-      this._close();
-    }
-    super.getCloseButton().addEventListener("click", this._closeHandler);
   }
-  open() {
+  _close() {
+    super.getOverlayElement().removeEventListener("click", this._overlayHandler);
+    super.close();
+  }
+  _setEventListeners() {
+    super.getOverlayElement().addEventListener("click", this._overlayHandler);
+    super.setEventListeners();
+  }
+  _populatePopup(cardElement) {
+    const formSection = super.getPopup();
+    const formPic = formSection.querySelector(".form__pic");
+    formPic.src = cardElement.querySelector(".place__picture").src;
+    formPic.alt = cardElement.querySelector(".place__picture").alt;
+    const formPicName = formSection.querySelector(".form__pic-name");
+    formPicName.textContent = cardElement.querySelector(".place__name").textContent;
+  }
+  open(cardElement) {
+    this._populatePopup(cardElement);
     this._setEventListeners();
     super.open();
   }

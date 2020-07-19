@@ -11,6 +11,7 @@ export default class Card {
   }
   _handleDeleteEvent() {
     this._card.remove();
+    this._card = null;
   }
   _getCardTemplate() {
     return document
@@ -20,17 +21,18 @@ export default class Card {
       .cloneNode(true);
   }
   _setEventListeners() {
-    this._card.addEventListener("click", (e) => {
-      if (e.target.classList.contains("heart-button")) {
-        this._handleLikeEvent(e);
-      }
-      if (e.target.classList.contains("trash-button")) {
-        this._handleDeleteEvent();
-      }
-      if (e.target.classList.contains("place__picture")) {
-        this._handleCardClick(this._card);
-      }
-    })
+    this._card.querySelector(".heart-button").addEventListener(
+      "click",
+      (e) => { this._handleLikeEvent(e); }
+    );
+    this._card.querySelector(".trash-button").addEventListener(
+      "click",
+      () => { this._handleDeleteEvent(); }
+    );
+    this._card.querySelector(".place__picture").addEventListener(
+      "click",
+      () => { this._handleCardClick(this._card); }
+    );
   }
   _setCard() {
     this._card = this._getCardTemplate();

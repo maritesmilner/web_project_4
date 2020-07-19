@@ -6,25 +6,16 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
 import {
-  profileName,
-  profileTitle,
   editButton,
   profileNameField,
   profileTitleField,
   addButton,
-  initialCards,
-  container
+  initialCards
 } from "../utils/constants.js";
 
+const popupWithImage = new PopupWithImage(".place-popup");
 const handleCardClick = (card) => {
-  const formSection = container.querySelector(".place-popup");
-  const formPic = formSection.querySelector(".form__pic");
-  formPic.src = card.querySelector(".place__picture").src;
-  formPic.alt = card.querySelector(".place__picture").alt;
-  const formPicName = formSection.querySelector(".form__pic-name");
-  formPicName.textContent = card.querySelector(".place__name").textContent;
-  const popup = new PopupWithImage(".place-popup", card);
-  popup.open();
+  popupWithImage.open(card);
 }
 const cardList = new Section({
   items: initialCards,
@@ -44,14 +35,15 @@ addButton.addEventListener("click", () => {
   newPlaceForm.open();
 });
 
+const profile = new UserInfo(".profile__name", ".profile__title");
 const handleEditProfileSubmit = ({ name, title }) => {
-  const profile = new UserInfo(name, title);
-  profile.setUserInfo();
+  profile.setUserInfo(name, title);
 }
 const editProfileForm = new PopupWithForm(".edit-profile-form", handleEditProfileSubmit);
 editButton.addEventListener("click", () => {
-  profileNameField.value = profileName.textContent;
-  profileTitleField.value = profileTitle.textContent;
+  const user = profile.getUserInfo();
+  profileNameField.value = user.name;
+  profileTitleField.value = user.title;
   editProfileForm.open();
 });
 
