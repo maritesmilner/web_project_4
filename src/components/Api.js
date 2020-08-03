@@ -25,7 +25,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error: ${res.status} - ${this._options.body}`);
+      return Promise.reject(`Error: ${res.status}`);
     })
     .then((res) => {
       callback(res);
