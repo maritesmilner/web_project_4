@@ -3,7 +3,7 @@
   height: 18px;
   border: 1px solid #FFFFFF;
   background-size: 7.5px 7.5px;
-  background-image: url('data:image/svg+xml;utf8,<svg class="edit-button" viewBox="0 0 10 10" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.32827L2.60377 8.7666L1.28302 7.41936L8.66038 0L10 1.32827ZM0 10L1.96226 9.41177L0.584906 8.08349L0 10Z"/></svg>');
+  background: url('../../images/edit-button.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: #000000;
@@ -14,7 +14,6 @@
   cursor: pointer;
   opacity: .6;
 }
-
 @media screen and (min-width: 1024px) {
   .edit-button {
     width: 24px;

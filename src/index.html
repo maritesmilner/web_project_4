@@ -15,13 +15,16 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img src="./images/avatar.jpg" alt="profile picture" class="profile__avatar">
+        <div class="profile__avatar-container">
+          <img alt="profile picture" class="profile__avatar">
+          <img src="./images/edit-button.svg" alt="edit profile picture" class="edit-button edit-button_place_avatar">
+        </div>
         <div class="profile__info">
           <div class="profile__person">
-            <h1 class="profile__name">Jacques Cousteau</h1>
-            <button class="edit-button" type="button" name="open-button" form="edit-profile"></button>
+            <h1 class="profile__name"></h1>
+            <button class="edit-button" type="button" name="open-button" form="edit-profile" id="edit-profile-button"></button>
           </div>
-          <p class="profile__title">Explorer</p>
+          <p class="profile__title"></p>
         </div>
         <button class="add-button" type="button" name="open-button" form="new-place"></button>
       </section>
@@ -35,7 +38,7 @@
           <h2 class="form__title">Edit profile</h2>
           <input type="text" placeholder="Name" name="name" class="form__input form__input_type_name" id="name" minlength="2" maxlength="40" required>
           <span class="form__input-error" id="name-error"></span>
-          <input type="text" placeholder="Title" name="title" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
+          <input type="text" placeholder="Title" name="about" class="form__input form__input_type_title" id="title" minlength="2" maxlength="200" required>
           <span class="form__input-error" id="title-error"></span>
           <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Save
@@ -46,7 +49,7 @@
        <section class="new-place-form hide">
         <div class="overlay"></div>
         <form class="form" id="new-place" novalidate>
-          <h2 class="form__title">New Place</h2>
+          <h2 class="form__title">New place</h2>
           <input type="text" placeholder="Title" name="name" class="form__input form__input_type_title" id="place-title" maxlength="30" required>
           <span class="form__input-error" id="place-title-error"></span>
           <input type="url" placeholder="Image Link" name="link" class="form__input form__input_type_link" id="link" required>
@@ -65,6 +68,28 @@
           <button type="button" class="form__close-button"></button>
         </figure>
        </section>
+       <section class="confirm-popup hide">
+        <div class="overlay"></div>
+        <div class="form form_confirm_delete">
+          <h2 class="form__title">Are you sure?</h2>
+          <button type="button" class="form__save-button form__save-button_confirm">
+            Yes
+          </button>
+          <button type="button" class="form__close-button"></button>
+        </div>
+       </section>
+       <section class="edit-profile-picture hide">
+        <div class="overlay"></div>
+        <form class="form" id="edit-profile-picture" novalidate>
+          <h2 class="form__title">Change profile picture</h2>
+          <input type="url" placeholder="Image Link" name="link" class="form__input form__input_type_link" id="link" required>
+          <span class="form__input-error" id="link-error"></span>
+          <button type="submit" class="form__save-button form__save-button_disabled" disabled>
+            Save
+          </button>
+          <button type="button" class="form__close-button"></button>
+        </form>
+       </section>
     </main>
     <footer>
       <p class="footer">© 2020 Around The U.S.</p>
@@ -76,7 +101,10 @@
       <button class="trash-button"></button>
       <div class="place__name-group">
         <h3 class="place__name"></h3>
-        <button class="heart-button"></button>
+        <div class="like">
+          <button class="like__button"></button>
+          <p class="like__count"></p>
+        </div>
       </div>
     </li>
   </template>

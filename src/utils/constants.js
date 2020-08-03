@@ -1,32 +1,24 @@
-export const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-  },
-  {
-    name: "Vanois National Park",
-    link: "https://code.s3.yandex.net/web-code/vanois.jpg"
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
-  }
-];
+import Api from "../components/Api.js";
+import UserInfo from "../components/UserInfo.js";
+
 const container = document.querySelector(".content");
-export const editButton = container.querySelector(".edit-button");
+export const editButton = document.getElementById("edit-profile-button");
+export const avatarElement = container.querySelector(".profile__avatar-container");
 const editFormSection = container.querySelector(".edit-profile-form");
 export const profileNameField = editFormSection.querySelector(".form__input_type_name");
 export const profileTitleField = editFormSection.querySelector(".form__input_type_title");
 export const addButton = container.querySelector(".add-button");
+export const profile = new UserInfo(".profile__name", ".profile__title", ".profile__avatar");
+export const api = new Api(
+  "https://around.nomoreparties.co/v1/group-3",
+  {
+    headers: {
+     authorization: "aae17431-b773-4b38-a586-5c35cb6461b9",
+     "Content-Type": "application/json"
+    }
+  }
+);
+
+const confirmPopupSection = container.querySelector(".confirm-popup");
+export const confirmYesButton = confirmPopupSection.querySelector(".form__save-button");
+export const savingTxt = "Saving...";

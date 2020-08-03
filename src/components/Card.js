@@ -1,17 +1,53 @@
+import {
+  api,
+  profile
+} from "../utils/constants.js";
+
 export default class Card {
-  constructor(placeName, imageURL, templateSelector, handleCardClick) {
-    this._placeName = placeName;
-    this._imageURL = imageURL;
+  constructor({ likes, _id, name, link, owner },
+    templateSelector, { handleCardClick, confirmDelete }) {
+    this._placeName = name;
+    this._imageURL = link;
+    this._likes = likes;
+    this._likeCount = likes.length;
+    this._id = _id;
+    this._owner = owner;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
-    this._card = this._setCard();
+    this._handleCardDelete = confirmDelete;
+    this._card = this._setCardElement();
   }
-  _handleLikeEvent(e) {
-    e.target.classList.toggle("heart-button_active");
+
+  _toggleLike() {
+    this._likeButtonElement.classList.toggle("like__button_active");
   }
-  _handleDeleteEvent() {
-    this._card.remove();
-    this._card = null;
+  _iLiked() {
+    this._likes.some((like) => like._id === this._userId) ?
+      this._toggleLike() : "";
+  }
+  _setLikeCountElement() {
+    this._likeCountElement.textContent = this._likeCount;
+  }
+  _changeLikeData(method, callback) {
+    api.handleData(
+      { entity: `cards/likes/${this._id}`,
+        method: method
+      },
+      callback
+    );
+  }
+  _handleLikeEvent() {
+    const handleResponse = ({likes}) => {
+      this._likes = likes;
+      this._likeCount = likes.length;
+      this._setLikeCountElement();
+      this._toggleLike();
+    }
+    let method = "";
+    this._likeButtonElement.classList.contains("like__button_active") ?
+      method = "DELETE" :
+      method = "PUT";
+    this._changeLikeData(method, handleResponse);
   }
   _getCardTemplate() {
     return document
@@ -21,29 +57,43 @@ export default class Card {
       .cloneNode(true);
   }
   _setEventListeners() {
-    this._card.querySelector(".heart-button").addEventListener(
+    this._likeButtonElement.addEventListener(
       "click",
-      (e) => { this._handleLikeEvent(e); }
+      () => { this._handleLikeEvent(); }
     );
-    this._card.querySelector(".trash-button").addEventListener(
+    this._trashButtonElement.addEventListener(
       "click",
-      () => { this._handleDeleteEvent(); }
+      () => { this._handleCardDelete(this); }
     );
     this._card.querySelector(".place__picture").addEventListener(
       "click",
       () => { this._handleCardClick(this._card); }
     );
   }
-  _setCard() {
+  _setCardElement() {
     this._card = this._getCardTemplate();
     const placePic = this._card.querySelector(".place__picture");
     placePic.src = this._imageURL;
     placePic.alt = `Picture of ${this._placeName}`;
     this._card.querySelector(".place__name").textContent = this._placeName;
+    this._likeCountElement = this._card.querySelector(".like__count");
+    this._likeButtonElement = this._card.querySelector(".like__button");
+    this._trashButtonElement = this._card.querySelector(".trash-button")
+    this._userId = profile.getUserId();
+    this._setLikeCountElement();
+    if (this._likeCount > 0 ) {
+      this._iLiked();
+    }
+    if (this._owner._id !== this._userId) {
+      this._trashButtonElement.classList.add("hide");
+    }
     this._setEventListeners();
     return this._card;
   }
-  getCard() {
+  getCardElement() {
     return this._card;
+  }
+  getCardId() {
+    return this._id;
   }
 }

@@ -1,0 +1,14 @@
+.profile__avatar-container {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  transition: .5s ease;
+}
+.profile__avatar-container:hover > .profile__avatar {
+  opacity: .6;
+}
+.profile__avatar-container:hover > .edit-button_place_avatar {
+  opacity: 1;
+}
+

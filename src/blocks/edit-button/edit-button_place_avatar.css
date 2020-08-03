@@ -1,0 +1,13 @@
+.edit-button_place_avatar {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: none;
+  z-index: 2;
+  cursor: pointer;
+  opacity: 0;
+}

@@ -15,7 +15,7 @@ export default class PopupWithForm extends Popup {
     });
     return this._formValues;
   }
-  _resetForm() {
+  resetForm() {
     this._popupForm.reset();
     super.getSaveButton().classList.add("form__save-button_disabled");
     super.getSaveButton().disabled = true;
@@ -24,13 +24,11 @@ export default class PopupWithForm extends Popup {
     this._submitHandler = (e) => {
       e.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this._resetForm();
-      this._close();
     }
     this._popupForm.addEventListener("submit", this._submitHandler);
     super.setEventListeners();
   }
-  _close() {
+  close() {
     this._popupForm.removeEventListener("submit", this._submitHandler);
     super.close();
   }
