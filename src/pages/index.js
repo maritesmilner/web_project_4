@@ -19,16 +19,13 @@ import {
 //get initial data
 const getInitialData = (callback) => {
   Promise.all([
-    api.getFetchPromise("users/me"),
-    api.getFetchPromise("cards")
+    api.getMe(),
+    api.getCards()
   ]).then((responses) => {
     // Get a JSON object from each of the responses
-    return Promise.all(responses.map((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Error: ${response.status}`);
-    }));
+    return Promise.all(responses.map((res) =>
+      res.ok ? res.json() : Promise.reject(`Error: ${res.status}`)
+    ));
   }).then((data) => {
     callback(data);
   }).catch((error) => {
@@ -64,38 +61,52 @@ const cardCallbacks = {
 };
 
 //delete card
+const deleteCard = (cardId, callback) => {
+  api.removeCard(cardId)
+  .then((res) => {
+    return res.ok ? Promise.resolve(true) : Promise.reject(`Error: ${res.status}`);
+  })
+  .then((res) => {
+    callback(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
 confirmYesButton.addEventListener("click", () => {
-  api.handleData(
-    { entity: `cards/${cardToBeDeleted.getCardId()}`,
-      method: "DELETE"
-    }
-  );
-  cardToBeDeleted.getCardElement().remove();
-  cardToBeDeleted = null;
-  confirmDeleteForm.close();
+  deleteCard(cardToBeDeleted.getId(), () => {
+    cardToBeDeleted.getCardElement().remove();
+    cardToBeDeleted = null;
+    confirmDeleteForm.close();
+  });
 });
 
-//new place
+//add card
+const addCard = (name, link, callback) => {
+  api.addCard(name, link)
+  .then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  })
+  .then((res) => {
+    callback(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
 const newPlaceForm = new PopupWithForm(".new-place-form", ({ name, link }) => {
   const saveButtonElement = newPlaceForm.getSaveButton();
   const origButtonLabel = saveButtonElement.textContent;
   saveButtonElement.textContent = savingTxt;
-  api.handleData(
-    { entity: "cards",
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        link: link
-      })
-    },
-    (card) => {
-      const newCard = new Card(card, ".place-template", cardCallbacks);
-      cardList.prependItem(newCard.getCardElement());
-      saveButtonElement.textContent = origButtonLabel;
-      newPlaceForm.resetForm();
-      newPlaceForm.close();
-    }
-  );
+  addCard(name, link, (card) => {
+    const newCard = new Card(card, ".place-template", cardCallbacks);
+    cardList.prependItem(newCard.getCardElement());
+    saveButtonElement.textContent = origButtonLabel;
+    newPlaceForm.resetForm();
+    newPlaceForm.close();
+  });
 });
 
 //open new place form
@@ -104,22 +115,29 @@ addButton.addEventListener("click", () => {
 });
 
 //edit profile
+const editProfile = (user, callback) => {
+  api.updateUserInfo(user)
+  .then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  })
+  .then((res) => {
+    callback(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
 const editProfileForm = new PopupWithForm(".edit-profile-form", (user) => {
   const saveButtonElement = editProfileForm.getSaveButton();
   const origButtonLabel = saveButtonElement.textContent;
   saveButtonElement.textContent = savingTxt;
-  api.handleData(
-    { entity: "users/me",
-      method: "PATCH",
-      body: JSON.stringify(user)
-    },
-    (user) => {
-      handleSetUserInfo(user);
-      saveButtonElement.textContent = origButtonLabel;
-      editProfileForm.resetForm();
-      editProfileForm.close();
-    }
-  );
+  editProfile(user, (user) => {
+    handleSetUserInfo(user);
+    saveButtonElement.textContent = origButtonLabel;
+    editProfileForm.resetForm();
+    editProfileForm.close();
+  })
 });
 
 //open edit profile form
@@ -131,22 +149,28 @@ editButton.addEventListener("click", () => {
 });
 
 //edit profile picture
-const editProfilePictureForm = new PopupWithForm(".edit-profile-picture", (user) => {
+const editProfilePic = (imageLink, callback) => {
+  api.updateUserAvatar(imageLink)
+  .then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  })
+  .then((res) => {
+    callback(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+const editProfilePictureForm = new PopupWithForm(".edit-profile-picture", (image) => {
   const saveButtonElement = editProfilePictureForm.getSaveButton();
   const origButtonLabel = saveButtonElement.textContent;
   saveButtonElement.textContent = savingTxt;
-  api.handleData(
-    { entity: "users/me/avatar",
-      method: "PATCH",
-      body: JSON.stringify({ avatar: user.link })
-    },
-    (user) => {
-      handleSetUserInfo(user);
-      saveButtonElement.textContent = origButtonLabel;
-      editProfilePictureForm.resetForm();
-      editProfilePictureForm.close();
-    }
-  );
+  editProfilePic(image.link, (user) => {
+    handleSetUserInfo(user);
+    saveButtonElement.textContent = origButtonLabel;
+    editProfilePictureForm.resetForm();
+    editProfilePictureForm.close();
+  })
 });
 avatarElement.addEventListener("click", () => {
   editProfilePictureForm.open();

@@ -22,3 +22,7 @@ export const api = new Api(
 const confirmPopupSection = container.querySelector(".confirm-popup");
 export const confirmYesButton = confirmPopupSection.querySelector(".form__save-button");
 export const savingTxt = "Saving...";
+export const meEntity = "users/me";
+export const cardsEntity = "cards";
+export const avatarEntity = `${meEntity}/avatar`;
+export const cardLikesEntity = `${cardsEntity}/likes`;

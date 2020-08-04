@@ -28,13 +28,29 @@ export default class Card {
   _setLikeCountElement() {
     this._likeCountElement.textContent = this._likeCount;
   }
-  _changeLikeData(method, callback) {
-    api.handleData(
-      { entity: `cards/likes/${this._id}`,
-        method: method
-      },
-      callback
-    );
+  _removeCardLike(callback) {
+    api.removeCardLike(this._id)
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    })
+    .then((res) => {
+      callback(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+  _addCardLike(callback) {
+    api.addCardLike(this._id)
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    })
+    .then((res) => {
+      callback(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
   _handleLikeEvent() {
     const handleResponse = ({likes}) => {
@@ -43,11 +59,9 @@ export default class Card {
       this._setLikeCountElement();
       this._toggleLike();
     }
-    let method = "";
     this._likeButtonElement.classList.contains("like__button_active") ?
-      method = "DELETE" :
-      method = "PUT";
-    this._changeLikeData(method, handleResponse);
+      this._removeCardLike(handleResponse) :
+      this._addCardLike(handleResponse);
   }
   _getCardTemplate() {
     return document
@@ -93,7 +107,7 @@ export default class Card {
   getCardElement() {
     return this._card;
   }
-  getCardId() {
+  getId() {
     return this._id;
   }
 }
