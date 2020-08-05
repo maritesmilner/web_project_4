@@ -8,7 +8,7 @@
 
 **Intro**
 
-This is a web page about place around the U.S.
+This is a web page about places around the U.S.
 
 **GitHub Pages**
 

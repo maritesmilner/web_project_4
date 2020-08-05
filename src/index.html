@@ -22,7 +22,7 @@
         <div class="profile__info">
           <div class="profile__person">
             <h1 class="profile__name"></h1>
-            <button class="edit-button" type="button" name="open-button" form="edit-profile" id="edit-profile-button"></button>
+            <button class="edit-button" type="button" aria-label="edit profile button" name="open-button" form="edit-profile" id="edit-profile-button"></button>
           </div>
           <p class="profile__title"></p>
         </div>
@@ -62,28 +62,28 @@
        </section>
        <section class="place-popup hide">
         <div class="overlay overlay_opacity_darker"></div>
-        <figure class="form form_display_pic">
+        <div class="form form_display_pic">
           <img class="form__pic">
           <figcaption class="form__pic-name"></figcaption>
           <button type="button" class="form__close-button"></button>
-        </figure>
+        </div>
        </section>
        <section class="confirm-popup hide">
         <div class="overlay"></div>
-        <div class="form form_confirm_delete">
+        <form class="form form_confirm_delete" novalidate>
           <h2 class="form__title">Are you sure?</h2>
-          <button type="button" class="form__save-button form__save-button_confirm">
+          <button type="submit" class="form__save-button form__save-button_confirm">
             Yes
           </button>
           <button type="button" class="form__close-button"></button>
-        </div>
+        </form>
        </section>
        <section class="edit-profile-picture hide">
         <div class="overlay"></div>
         <form class="form" id="edit-profile-picture" novalidate>
           <h2 class="form__title">Change profile picture</h2>
-          <input type="url" placeholder="Image Link" name="link" class="form__input form__input_type_link" id="link" required>
-          <span class="form__input-error" id="link-error"></span>
+          <input type="url" placeholder="Image Link" name="link" class="form__input form__input_type_link" id="pic-link" required>
+          <span class="form__input-error" id="pic-link-error"></span>
           <button type="submit" class="form__save-button form__save-button_disabled" disabled>
             Save
           </button>

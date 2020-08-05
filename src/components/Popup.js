@@ -2,11 +2,12 @@ export default class Popup {
   constructor(popupSelector) {
     this._selector = popupSelector;
     this._popup = document.querySelector(popupSelector);
+    this._form = this._popup.querySelector(".form")
     this._closeButton = this._popup.querySelector(".form__close-button");
+    this._closeButton.addEventListener("click", () => this.close());
     this._saveButton = this._popup.querySelector(".form__save-button");
-    this._overlayElement = this._popup.querySelector(".overlay");
-    this._closeHandler =  () => {
-      this.close();
+    if(this._saveButton) {
+      this._saveButtonOrigTxt = this._saveButton.textContent;
     }
     this._escapeHandler = (e) => {
       if(e.key === "Escape") {
@@ -14,29 +15,30 @@ export default class Popup {
       }
     }
   }
-
   open() {
+    document.addEventListener("keyup", this._escapeHandler);
     this._popup.classList.toggle("hide");
   }
   close() {
-    this._closeButton.removeEventListener("click", this._closeHandler);
     document.removeEventListener("keyup", this._escapeHandler);
     this._popup.classList.toggle("hide");
   }
-  setEventListeners() {
-    this._closeButton.addEventListener("click", this._closeHandler);
-    document.addEventListener("keyup", this._escapeHandler);
+  populatePopup(callback) {
+    callback(this._popup);
   }
-  getPopup() {
-    return this._popup;
+  setOverlayListener(callback) {
+    callback(this._popup.querySelector(".overlay"));
   }
-  getCloseButton() {
-    return this._closeButton;
+  setFormListener(callback) {
+    callback(this._form);
   }
-  getSaveButton() {
-    return this._saveButton;
+  resetForm(callback) {
+    callback(this._form, this._saveButton, this._saveButtonOrigTxt);
   }
-  getOverlayElement() {
-    return this._overlayElement;
+  setSaveButtonTxt(callback) {
+    callback(this._saveButton);
+  }
+  getFormFieldValues(callback) {
+    callback(this._form);
   }
 }
