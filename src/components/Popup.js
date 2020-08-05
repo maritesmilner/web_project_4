@@ -41,4 +41,7 @@ export default class Popup {
   getFormFieldValues(callback) {
     callback(this._form);
   }
+  enableSaveButton(callback) {
+    callback(this._saveButton);
+  }
 }

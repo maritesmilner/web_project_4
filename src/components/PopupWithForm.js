@@ -1,10 +1,10 @@
 import Popup from "./Popup.js"
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, {callback1 = null, callback2 = null}) {
+  constructor(popupSelector, {promise, callback}) {
     super(popupSelector);
-    this._handleFormSubmit = callback1;
-    this._callback2 = callback2;
+    this._handleFormSubmit = promise;
+    this._callback = callback;
     super.setFormListener((form) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -12,7 +12,7 @@ export default class PopupWithForm extends Popup {
         super.getFormFieldValues((form) => {
           this._handleFormSubmit(this._getInputValues(form))
           .then((res) => {
-            this._callback2(res);
+            this._callback(res);
           })
           .catch((err) => {
             console.log(err);
@@ -44,8 +44,8 @@ export default class PopupWithForm extends Popup {
   setHandleFormSubmit(callback) {
     this._handleFormSubmit = callback;
   }
-  setCallbacks({callback1, callback2}) {
-    this._handleFormSubmit = callback1;
-    this._callback2 = callback2;
+  setCallbacks({promise, callback}) {
+    this._handleFormSubmit = promise;
+    this._callback = callback;
   }
 }

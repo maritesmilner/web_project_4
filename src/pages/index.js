@@ -1,6 +1,7 @@
 import "./index.css";
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
+import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -8,12 +9,10 @@ import FormValidator from "../components/FormValidator.js";
 import {
   editButton,
   addButton,
-  profile,
-  savingTxt,
   avatarElement
 } from "../utils/constants.js";
 
-export const api = new Api(
+const api = new Api(
   "https://around.nomoreparties.co/v1/group-3",
   {
     headers: {
@@ -23,6 +22,8 @@ export const api = new Api(
   }
 );
 
+const profile = new UserInfo(".profile__name", ".profile__title", ".profile__avatar");
+
 //display, delete, like/unlike card
 const popupWithImage = new PopupWithImage(".place-popup");
 const confirmDeleteForm = new PopupWithForm(".confirm-popup", {});
@@ -30,21 +31,17 @@ const cardCallbacks = {
   handleCardClick: (imageUrl, imageName) => popupWithImage.open(imageUrl, imageName),
   confirmDelete: (card) => {
     confirmDeleteForm.setCallbacks({
-      callback1: () => api.removeCard(card.getId()),
-      callback2: () => card.remove()
+      promise: () => api.removeCard(card.getId()),
+      callback: () => card.remove()
     });
+    confirmDeleteForm.enableSaveButton((saveButton) => {
+      saveButton.classList.remove("form__save-button_disabled");
+      saveButton.disabled = false;
+    })
     confirmDeleteForm.open();
   },
-  handleCardLike: (evt, cardId) => {
-    const callback = ({likes}) => {
-      evt.target.parentNode.querySelector(".like__count").textContent = likes.length;
-      evt.target.classList.toggle("like__button_active");
-    }
-    // card.getLikeButtonElement().classList.contains("like__button_active") ?
-    evt.target.classList.contains("like__button_active") ?
-      api.removeCardLike(cardId, callback) :
-      api.addCardLike(cardId, callback);
-  }
+  handleAddLike: (cardId) => api.addCardLike(cardId),
+  handleRemoveLike: (cardId) => api.removeCardLike(cardId)
 };
 
 //set user profile and display initial cards
@@ -65,8 +62,8 @@ api.getInitialData(([user, cards]) => {
 //add card
 const newPlaceForm = new PopupWithForm(".new-place-form",
   {
-    callback1: ({ name, link }) => api.addCard(name, link),
-    callback2: (card) => {
+    promise: ({ name, link }) => api.addCard(name, link),
+    callback: (card) => {
       const newCard = new Card(card, ".place-template", cardCallbacks);
       cardList.prependItem(newCard.getCardElement());
     }
@@ -74,14 +71,12 @@ const newPlaceForm = new PopupWithForm(".new-place-form",
 );
 
 //open new place form
-addButton.addEventListener("click", () => {
-  newPlaceForm.open();
-});
+addButton.addEventListener("click", () => newPlaceForm.open());
 
 //edit profile
 const editProfileForm = new PopupWithForm(".edit-profile-form", {
-    callback1: (user) => api.updateUserInfo(user),
-    callback2: handleSetUserInfo
+    promise: (user) => api.updateUserInfo(user),
+    callback: handleSetUserInfo
   }
 );
 
@@ -98,8 +93,8 @@ editButton.addEventListener("click", () => {
 
 const editProfilePictureForm = new PopupWithForm(".edit-profile-picture",
   {
-    callback1: (image) => api.updateUserAvatar(image.link),
-    callback2: handleSetUserInfo
+    promise: (image) => api.updateUserAvatar(image.link),
+    callback: handleSetUserInfo
   }
 );
 

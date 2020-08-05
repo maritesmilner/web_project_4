@@ -15,25 +15,11 @@ export default class Api {
     return fetch(`${this._baseUrl}/${entity}`, this._options);
   }
 
-  _transactData(entity, callback) {
-     fetch(`${this._baseUrl}/${entity}`, this._options)
-    .then((res) => {
-      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
-    })
-    .then((res) => {
-      callback(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-
   _getDataPromise(entity) {
     return fetch(`${this._baseUrl}/${entity}`, this._options)
     .then((res) => {
       return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
-
   }
 
   getInitialData(callback) {
@@ -78,14 +64,14 @@ export default class Api {
     return this._getDataPromise(`${cardsEntity}/${cardId}`);
   }
 
-  addCardLike(cardId, callback) {
+  addCardLike(cardId) {
     this._options.method = "PUT";
-    this._transactData(`${cardLikesEntity}/${cardId}`, callback);
+    return this._getDataPromise(`${cardLikesEntity}/${cardId}`);
   }
 
-  removeCardLike(cardId, callback) {
+  removeCardLike(cardId) {
     this._options.method = "DELETE";
-    this._transactData(`${cardLikesEntity}/${cardId}`, callback);
+    return this._getDataPromise(`${cardLikesEntity}/${cardId}`);
   }
 }
 
