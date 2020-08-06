@@ -2,8 +2,7 @@ import Popup from "./Popup.js"
 
 export default class PopupWithForm extends Popup {
   constructor(
-    { promise, callback },
-    { popupSelector, saveButtonEnabledFlag = false }
+    { promise, callback, popupSelector, saveButtonEnabledFlag = false }
   ){
     super(popupSelector);
     this._handleFormSubmit = promise;

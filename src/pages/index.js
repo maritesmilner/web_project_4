@@ -27,7 +27,6 @@ const profile = new UserInfo(".profile__name", ".profile__title", ".profile__ava
 //display, delete, like/unlike card
 const popupWithImage = new PopupWithImage(".place-popup");
 const confirmDeleteForm = new PopupWithForm(
-  {},
   {
     popupSelector: ".confirm-popup",
     saveButtonEnabledFlag: true
@@ -68,9 +67,7 @@ const newPlaceForm = new PopupWithForm(
     callback: (card) => {
       const newCard = new Card(card, ".place-template", cardCallbacks);
       cardList.prependItem(newCard.getCardElement());
-    }
-  },
-  {
+    },
     popupSelector: ".new-place-form"
   }
 );
@@ -82,9 +79,7 @@ addButton.addEventListener("click", () => newPlaceForm.open());
 const editProfileForm = new PopupWithForm(
   {
     promise: (user) => api.updateUserInfo(user),
-    callback: handleSetUserInfo
-  },
-  {
+    callback: handleSetUserInfo,
     popupSelector: ".edit-profile-form"
   }
 );
@@ -98,9 +93,7 @@ editButton.addEventListener("click", () => {
 const editProfilePictureForm = new PopupWithForm(
   {
     promise: (image) => api.updateUserAvatar(image.link),
-    callback: handleSetUserInfo
-  },
-  {
+    callback: handleSetUserInfo,
     popupSelector: ".edit-profile-picture"
   }
 );
