@@ -20,7 +20,6 @@ export default class UserInfo {
     this._nameELement.textContent = name;
     this._titleElement.textContent = about;
     this._avatarElement.src = avatar;
-    // this._avatarElement.style.backgroundImage = `url(${avatar})`;
     this._id = _id;
   }
   getUserId() {

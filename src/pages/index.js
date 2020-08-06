@@ -26,7 +26,13 @@ const profile = new UserInfo(".profile__name", ".profile__title", ".profile__ava
 
 //display, delete, like/unlike card
 const popupWithImage = new PopupWithImage(".place-popup");
-const confirmDeleteForm = new PopupWithForm(".confirm-popup", {});
+const confirmDeleteForm = new PopupWithForm(
+  {},
+  {
+    popupSelector: ".confirm-popup",
+    saveButtonEnabledFlag: true
+  }
+);
 const cardCallbacks = {
   handleCardClick: (imageUrl, imageName) => popupWithImage.open(imageUrl, imageName),
   confirmDelete: (card) => {
@@ -34,10 +40,6 @@ const cardCallbacks = {
       promise: () => api.removeCard(card.getId()),
       callback: () => card.remove()
     });
-    confirmDeleteForm.enableSaveButton((saveButton) => {
-      saveButton.classList.remove("form__save-button_disabled");
-      saveButton.disabled = false;
-    })
     confirmDeleteForm.open();
   },
   handleAddLike: (cardId) => api.addCardLike(cardId),
@@ -59,14 +61,17 @@ api.getInitialData(([user, cards]) => {
   cardList.renderItems();
 })
 
-//add card
-const newPlaceForm = new PopupWithForm(".new-place-form",
+//add new place
+const newPlaceForm = new PopupWithForm(
   {
     promise: ({ name, link }) => api.addCard(name, link),
     callback: (card) => {
       const newCard = new Card(card, ".place-template", cardCallbacks);
       cardList.prependItem(newCard.getCardElement());
     }
+  },
+  {
+    popupSelector: ".new-place-form"
   }
 );
 
@@ -74,30 +79,33 @@ const newPlaceForm = new PopupWithForm(".new-place-form",
 addButton.addEventListener("click", () => newPlaceForm.open());
 
 //edit profile
-const editProfileForm = new PopupWithForm(".edit-profile-form", {
+const editProfileForm = new PopupWithForm(
+  {
     promise: (user) => api.updateUserInfo(user),
     callback: handleSetUserInfo
+  },
+  {
+    popupSelector: ".edit-profile-form"
   }
 );
 
 //open edit profile form
 editButton.addEventListener("click", () => {
-  const user = profile.getUserInfo();
-  editProfileForm.populatePopup((popup) => {
-    const formSection = popup;
-    formSection.querySelector(".form__input_type_name").value = user.name;
-    formSection.querySelector(".form__input_type_title").value = user.about;
-  })
+  editProfileForm.setInputValues(profile.getUserInfo());
   editProfileForm.open();
 });
 
-const editProfilePictureForm = new PopupWithForm(".edit-profile-picture",
+const editProfilePictureForm = new PopupWithForm(
   {
     promise: (image) => api.updateUserAvatar(image.link),
     callback: handleSetUserInfo
+  },
+  {
+    popupSelector: ".edit-profile-picture"
   }
 );
 
+//open edit profile picture form
 avatarElement.addEventListener("click", () => {
   editProfilePictureForm.open();
 })

@@ -3,6 +3,7 @@ export default class Popup {
     this._selector = popupSelector;
     this._popup = document.querySelector(popupSelector);
     this._form = this._popup.querySelector(".form")
+    this._overlayElement = this._popup.querySelector(".overlay");
     this._closeButton = this._popup.querySelector(".form__close-button");
     this._closeButton.addEventListener("click", () => this.close());
     this._saveButton = this._popup.querySelector(".form__save-button");
@@ -22,26 +23,5 @@ export default class Popup {
   close() {
     document.removeEventListener("keyup", this._escapeHandler);
     this._popup.classList.toggle("hide");
-  }
-  populatePopup(callback) {
-    callback(this._popup);
-  }
-  setOverlayListener(callback) {
-    callback(this._popup.querySelector(".overlay"));
-  }
-  setFormListener(callback) {
-    callback(this._form);
-  }
-  resetForm(callback) {
-    callback(this._form, this._saveButton, this._saveButtonOrigTxt);
-  }
-  setSaveButtonTxt(callback) {
-    callback(this._saveButton);
-  }
-  getFormFieldValues(callback) {
-    callback(this._form);
-  }
-  enableSaveButton(callback) {
-    callback(this._saveButton);
   }
 }
