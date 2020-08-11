@@ -11,6 +11,7 @@ const presets = [
     // use polyfills for the browsers specified in the above targets option
         // Babel uses polyfills from the core-js library
     useBuiltIns: "entry"
-  }]
+  }],
+  ['@babel/preset-react']
 ];
 
